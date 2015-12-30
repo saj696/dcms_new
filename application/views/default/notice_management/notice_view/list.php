@@ -33,6 +33,7 @@ $user=User_helper::get_user();
                 { name: 'notice_title', type: 'string' },
                 { name: 'upload_status', type: 'string' },
                 { name: 'name_bn', type: 'string' },
+                { name: 'sender_name', type: 'string' },
                 { name: 'status_text', type: 'string' }
             ],
             id: 'id',
@@ -57,9 +58,10 @@ $user=User_helper::get_user();
                 autoheight: true,
 
                 columns: [
-                    { text: '<?php echo $CI->lang->line('NOTICE_TITLE'); ?>', dataField: 'notice_title', width:'600'},
+                    { text: '<?php echo $CI->lang->line('NOTICE_TITLE'); ?>', dataField: 'notice_title', width:'400'},
                     { text: '<?php echo $CI->lang->line('FILE_UPLOAD'); ?>', dataField: 'upload_status', width:'200'},
-                    { text: '<?php echo $CI->lang->line('SENDER_NAME'); ?>', dataField: 'name_bn', width:'200'},
+                    { text: '<?php echo $CI->lang->line('SENDER'); ?>', dataField: 'name_bn', width:'200'},
+                    { text: '<?php echo $CI->lang->line('SENDER_NAME'); ?>', dataField: 'sender_name', width:'200'},
                     { text: '<?php echo $CI->lang->line('STATUS'); ?>', dataField: 'status_text',cellsalign: 'right',width:'115'}
                 ]
             });

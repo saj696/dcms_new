@@ -150,7 +150,7 @@ class Service_template extends Root_Controller
             $invoice_data['divid'] = $division;
             $invoice_data['type'] = $user_group_id;
             $invoice_data['invoice_date'] = $invoice_date;
-            $invoice_data['total_income'] = $total_income;
+            $invoice_data['total_income'] = round($total_income);
             $invoice_data['total_service'] = $total_service;
             $invoice_data['total_men'] = $total_men;
             $invoice_data['total_women'] = $total_women;
@@ -166,47 +166,56 @@ class Service_template extends Root_Controller
             $zilla_invoice_data['divid'] = $division;
             $zilla_invoice_data['type'] = $user_group_id;
             $zilla_invoice_data['invoice_date'] = $invoice_date;
-            $zilla_invoice_data['total_income'] = $total_income;
+            $zilla_invoice_data['total_income'] = round($total_income);
             $zilla_invoice_data['total_service'] = $total_service;
             $zilla_invoice_data['total_men'] = $total_men;
             $zilla_invoice_data['total_women'] = $total_women;
 
-            $this->db->trans_start();  //DB Transaction Handle START
-
-            $invoice_id = Query_helper::add('invoices', $invoice_data);
-            $zilla_invoice_id = Query_helper::add($zilla_table_invoice, $zilla_invoice_data);
-
-            for($i=0; $i<$count; $i++)
+            if($total_income < $this->config->item('service_amount_limit'))
             {
-                $invoice_details_data['invoice_id'] = $invoice_id;
-                $invoice_details_data['receiver_name'] = $customerPost[$i];
-                $invoice_details_data['receiver_sex'] = $genderPost[$i];
-                $invoice_details_data['service_id'] = $servicePost[$i];
-                $invoice_details_data['income'] = System_helper::Get_Bng_to_Eng($earningPost[$i]);
-                $invoice_details_data['service_name'] = $this->Service_template_model->get_service_name($servicePost[$i]);
+                $this->db->trans_start();  //DB Transaction Handle START
 
-                $zilla_invoice_details_data['invoice_id'] = $zilla_invoice_id;
-                $zilla_invoice_details_data['receiver_name'] = $customerPost[$i];
-                $zilla_invoice_details_data['receiver_sex'] = $genderPost[$i];
-                $zilla_invoice_details_data['service_id'] = $servicePost[$i];
-                $zilla_invoice_details_data['income'] = System_helper::Get_Bng_to_Eng($earningPost[$i]);
-                $zilla_invoice_details_data['service_name'] = $this->Service_template_model->get_service_name($servicePost[$i]);
+                $invoice_id = Query_helper::add('invoices', $invoice_data);
+                $zilla_invoice_id = Query_helper::add($zilla_table_invoice, $zilla_invoice_data);
 
-                Query_helper::add('invoice_details', $invoice_details_data);
-                Query_helper::add($zilla_table_invoice_details, $zilla_invoice_details_data);
-            }
+                for($i=0; $i<$count; $i++)
+                {
+                    $invoice_details_data['invoice_id'] = $invoice_id;
+                    $invoice_details_data['receiver_name'] = $customerPost[$i];
+                    $invoice_details_data['receiver_sex'] = $genderPost[$i];
+                    $invoice_details_data['service_id'] = $servicePost[$i];
+                    $invoice_details_data['income'] = round(System_helper::Get_Bng_to_Eng($earningPost[$i]));
+                    $invoice_details_data['service_name'] = $this->Service_template_model->get_service_name($servicePost[$i]);
 
-            $this->db->trans_complete();   //DB Transaction Handle END
+                    $zilla_invoice_details_data['invoice_id'] = $zilla_invoice_id;
+                    $zilla_invoice_details_data['receiver_name'] = $customerPost[$i];
+                    $zilla_invoice_details_data['receiver_sex'] = $genderPost[$i];
+                    $zilla_invoice_details_data['service_id'] = $servicePost[$i];
+                    $zilla_invoice_details_data['income'] = round(System_helper::Get_Bng_to_Eng($earningPost[$i]));
+                    $zilla_invoice_details_data['service_name'] = $this->Service_template_model->get_service_name($servicePost[$i]);
 
-            if($this->db->trans_status() === TRUE)
-            {
-                $this->message = $this->lang->line("MSG_CREATE_SUCCESS");
-                $this->dcms_add();
+                    Query_helper::add('invoice_details', $invoice_details_data);
+                    Query_helper::add($zilla_table_invoice_details, $zilla_invoice_details_data);
+                }
+
+                $this->db->trans_complete();   //DB Transaction Handle END
+
+                if($this->db->trans_status() === TRUE)
+                {
+                    $this->message = $this->lang->line("MSG_CREATE_SUCCESS");
+                    $this->dcms_add();
+                }
+                else
+                {
+                    $ajax['status']=false;
+                    $ajax['system_message']=$this->lang->line("MSG_CREATE_FAIL");
+                    $this->jsonReturn($ajax);
+                }
             }
             else
             {
                 $ajax['status']=false;
-                $ajax['system_message']=$this->lang->line("MSG_CREATE_FAIL");
+                $ajax['system_message']=$this->lang->line("SERVICE_AMOUNT_LIMIT");
                 $this->jsonReturn($ajax);
             }
         }
@@ -344,118 +353,127 @@ class Service_template extends Root_Controller
 
                 if ($this->Service_template_model->chk_existing_uploded_excel_file($invDate) < 2)
                 {
-                    $invoice_data = array();
-                    $zilla_invoice_data = array();
-                    $invoice_details_data = array();
-                    $zilla_invoice_details_data = array();
-
-                    $user_zilla = $user->zilla;
-                    $zilla_table_invoice = str_pad($user_zilla, 2, "0", STR_PAD_LEFT).'_invoices';
-                    $zilla_table_invoice_details = str_pad($user_zilla, 2, "0", STR_PAD_LEFT).'_invoice_details';
-
-                    $uisc_id = $user->uisc_id;
-                    $user_group_id = $user->user_group_id;
-                    $division = $user->division;
-                    $zilla = $user->zilla;
-                    $upazila = $user->upazila;
-                    $unioun = $user->unioun;
-                    $citycorporation = $user->citycorporation;
-                    //$citycorporationward = $user->citycorporationward;
-                    $municipal = $user->municipal;
-                    //$municipalward = $user->municipalward;
-
-                    $invoice_date = $invDate;
-                    $customerPost = $customer_name;
-                    $servicePost = $service_name;
-                    $genderPost = $gender;
-                    $earningPost = $amount;
-                    $count = sizeof($customerPost);
-
-                    $invoice_data['uisc_id'] = $uisc_id;
-                    $invoice_data['unionid'] = $unioun;
-                    $invoice_data['municipalid'] = $municipal;
-                    $invoice_data['citycorporationid'] = $citycorporation;
-                    $invoice_data['upazilaid'] = $upazila;
-                    $invoice_data['zillaid'] = $zilla;
-                    $invoice_data['divid'] = $division;
-                    $invoice_data['type'] = $user_group_id;
-                    $invoice_data['invoice_date'] = $invoice_date;
-                    $invoice_data['total_income'] = $total_income;
-                    $invoice_data['total_service'] = $total_services;
-                    $invoice_data['total_men'] = $total_men;
-                    $invoice_data['total_women'] = $total_women;
-                    $invoice_data['total_tribe'] = $total_tribe;
-                    $invoice_data['total_disability'] = $total_disability;
-
-                    $zilla_invoice_data['uisc_id'] = $uisc_id;
-                    $zilla_invoice_data['unionid'] = $unioun;
-                    $zilla_invoice_data['municipalid'] = $municipal;
-                    $zilla_invoice_data['citycorporationid'] = $citycorporation;
-                    $zilla_invoice_data['upazilaid'] = $upazila;
-                    $zilla_invoice_data['zillaid'] = $zilla;
-                    $zilla_invoice_data['divid'] = $division;
-                    $zilla_invoice_data['type'] = $user_group_id;
-                    $zilla_invoice_data['invoice_date'] = $invoice_date;
-                    $zilla_invoice_data['total_income'] = $total_income;
-                    $zilla_invoice_data['total_service'] = $total_services;
-                    $zilla_invoice_data['total_men'] = $total_men;
-                    $zilla_invoice_data['total_women'] = $total_women;
-
-                    //                    echo $zilla_table_invoice;
-                    //                    print_r($zilla_invoice_data);exit;
-                    if(!$check_income)
+                    if($total_income < $this->config->item('service_amount_limit'))
                     {
-                        if($total_services>0)
+                        $invoice_data = array();
+                        $zilla_invoice_data = array();
+                        $invoice_details_data = array();
+                        $zilla_invoice_details_data = array();
+
+                        $user_zilla = $user->zilla;
+                        $zilla_table_invoice = str_pad($user_zilla, 2, "0", STR_PAD_LEFT).'_invoices';
+                        $zilla_table_invoice_details = str_pad($user_zilla, 2, "0", STR_PAD_LEFT).'_invoice_details';
+
+                        $uisc_id = $user->uisc_id;
+                        $user_group_id = $user->user_group_id;
+                        $division = $user->division;
+                        $zilla = $user->zilla;
+                        $upazila = $user->upazila;
+                        $unioun = $user->unioun;
+                        $citycorporation = $user->citycorporation;
+                        //$citycorporationward = $user->citycorporationward;
+                        $municipal = $user->municipal;
+                        //$municipalward = $user->municipalward;
+
+                        $invoice_date = $invDate;
+                        $customerPost = $customer_name;
+                        $servicePost = $service_name;
+                        $genderPost = $gender;
+                        $earningPost = $amount;
+                        $count = sizeof($customerPost);
+
+                        $invoice_data['uisc_id'] = $uisc_id;
+                        $invoice_data['unionid'] = $unioun;
+                        $invoice_data['municipalid'] = $municipal;
+                        $invoice_data['citycorporationid'] = $citycorporation;
+                        $invoice_data['upazilaid'] = $upazila;
+                        $invoice_data['zillaid'] = $zilla;
+                        $invoice_data['divid'] = $division;
+                        $invoice_data['type'] = $user_group_id;
+                        $invoice_data['invoice_date'] = $invoice_date;
+                        $invoice_data['total_income'] = round($total_income);
+                        $invoice_data['total_service'] = $total_services;
+                        $invoice_data['total_men'] = $total_men;
+                        $invoice_data['total_women'] = $total_women;
+                        $invoice_data['total_tribe'] = $total_tribe;
+                        $invoice_data['total_disability'] = $total_disability;
+
+                        $zilla_invoice_data['uisc_id'] = $uisc_id;
+                        $zilla_invoice_data['unionid'] = $unioun;
+                        $zilla_invoice_data['municipalid'] = $municipal;
+                        $zilla_invoice_data['citycorporationid'] = $citycorporation;
+                        $zilla_invoice_data['upazilaid'] = $upazila;
+                        $zilla_invoice_data['zillaid'] = $zilla;
+                        $zilla_invoice_data['divid'] = $division;
+                        $zilla_invoice_data['type'] = $user_group_id;
+                        $zilla_invoice_data['invoice_date'] = $invoice_date;
+                        $zilla_invoice_data['total_income'] = round($total_income);
+                        $zilla_invoice_data['total_service'] = $total_services;
+                        $zilla_invoice_data['total_men'] = $total_men;
+                        $zilla_invoice_data['total_women'] = $total_women;
+
+                        //                    echo $zilla_table_invoice;
+                        //                    print_r($zilla_invoice_data);exit;
+                        if(!$check_income)
                         {
-                            $this->db->trans_start();  //DB Transaction Handle START
-
-                            //$delete_invoice_data['invoice_date'] = $invoice_date;
-                            //Query_helper::delete('invoices', $delete_invoice_data);
-                            if($this->Service_template_model->delete_invoice_data($invoice_date))
+                            if($total_services>0)
                             {
-                                $invoice_id = Query_helper::add('invoices', $invoice_data);
-                                $zilla_invoice_id = Query_helper::add($zilla_table_invoice, $zilla_invoice_data);
+                                $this->db->trans_start();  //DB Transaction Handle START
 
-                                for($i=0; $i<$count; $i++)
+                                //$delete_invoice_data['invoice_date'] = $invoice_date;
+                                //Query_helper::delete('invoices', $delete_invoice_data);
+                                if($this->Service_template_model->delete_invoice_data($invoice_date))
                                 {
-                                    if($this->Service_template_model->check_uisc_service_existence($servicePost[$i]))
+                                    $invoice_id = Query_helper::add('invoices', $invoice_data);
+                                    $zilla_invoice_id = Query_helper::add($zilla_table_invoice, $zilla_invoice_data);
+
+                                    for($i=0; $i<$count; $i++)
                                     {
-                                        list($service_id, $service_name)=$this->Service_template_model->check_uisc_service_existence($servicePost[$i]);
-                                        $invoice_details_data['invoice_id'] = $invoice_id;
-                                        $invoice_details_data['receiver_name'] = $customerPost[$i];
-                                        $invoice_details_data['receiver_sex'] = $genderPost[$i];
-                                        $invoice_details_data['service_id'] = $service_id;//$this->Service_template_model->get_service_id($servicePost[$i]);
-                                        $invoice_details_data['income'] = System_helper::Get_Bng_to_Eng($earningPost[$i]);
-                                        $invoice_details_data['service_name'] = $service_name;//$this->Service_template_model->get_service_name($servicePost[$i]);
+                                        if($this->Service_template_model->check_uisc_service_existence($servicePost[$i]))
+                                        {
+                                            list($service_id, $service_name)=$this->Service_template_model->check_uisc_service_existence($servicePost[$i]);
+                                            $invoice_details_data['invoice_id'] = $invoice_id;
+                                            $invoice_details_data['receiver_name'] = $customerPost[$i];
+                                            $invoice_details_data['receiver_sex'] = $genderPost[$i];
+                                            $invoice_details_data['service_id'] = $service_id;//$this->Service_template_model->get_service_id($servicePost[$i]);
+                                            $invoice_details_data['income'] = round(System_helper::Get_Bng_to_Eng($earningPost[$i]));
+                                            $invoice_details_data['service_name'] = $service_name;//$this->Service_template_model->get_service_name($servicePost[$i]);
 
-                                        $zilla_invoice_details_data['invoice_id'] = $zilla_invoice_id;
-                                        $zilla_invoice_details_data['receiver_name'] = $customerPost[$i];
-                                        $zilla_invoice_details_data['receiver_sex'] = $genderPost[$i];
-                                        $zilla_invoice_details_data['service_id'] = $service_id;//$this->Service_template_model->get_service_id($servicePost[$i]);
-                                        $zilla_invoice_details_data['income'] = System_helper::Get_Bng_to_Eng($earningPost[$i]);
-                                        $zilla_invoice_details_data['service_name'] = $service_name;//$this->Service_template_model->get_service_name($servicePost[$i]);
+                                            $zilla_invoice_details_data['invoice_id'] = $zilla_invoice_id;
+                                            $zilla_invoice_details_data['receiver_name'] = $customerPost[$i];
+                                            $zilla_invoice_details_data['receiver_sex'] = $genderPost[$i];
+                                            $zilla_invoice_details_data['service_id'] = $service_id;//$this->Service_template_model->get_service_id($servicePost[$i]);
+                                            $zilla_invoice_details_data['income'] = round(System_helper::Get_Bng_to_Eng($earningPost[$i]));
+                                            $zilla_invoice_details_data['service_name'] = $service_name;//$this->Service_template_model->get_service_name($servicePost[$i]);
 
-                                        Query_helper::add('invoice_details', $invoice_details_data);
-                                        Query_helper::add($zilla_table_invoice_details, $zilla_invoice_details_data);
+                                            Query_helper::add('invoice_details', $invoice_details_data);
+                                            Query_helper::add($zilla_table_invoice_details, $zilla_invoice_details_data);
+                                        }
                                     }
-                                }
 
-                                $fileInfo = array(
-                                    'user_id' => $user->id,
-                                    'uisc_id' => $uisc_id,
-                                    'file_name' => $fileName,
-                                    'upload_date' => strtotime($invDate),
-                                    'create_date' => time()
-                                );
+                                    $fileInfo = array(
+                                        'user_id' => $user->id,
+                                        'uisc_id' => $uisc_id,
+                                        'file_name' => $fileName,
+                                        'upload_date' => strtotime($invDate),
+                                        'create_date' => time()
+                                    );
 
-                                Query_helper::add($this->config->item('table_excel_history'), $fileInfo);
+                                    Query_helper::add($this->config->item('table_excel_history'), $fileInfo);
 
-                                $this->db->trans_complete();   //DB Transaction Handle END
+                                    $this->db->trans_complete();   //DB Transaction Handle END
 
-                                if($this->db->trans_status() === TRUE)
-                                {
-                                    $this->message = $this->lang->line("MSG_CREATE_SUCCESS");
-                                    $this->dcms_add();
+                                    if($this->db->trans_status() === TRUE)
+                                    {
+                                        $this->message = $this->lang->line("MSG_CREATE_SUCCESS");
+                                        $this->dcms_add();
+                                    }
+                                    else
+                                    {
+                                        $ajax['status']=false;
+                                        $ajax['system_message']=$this->lang->line("MSG_CREATE_FAIL");
+                                        $this->jsonReturn($ajax);
+                                    }
                                 }
                                 else
                                 {
@@ -467,21 +485,21 @@ class Service_template extends Root_Controller
                             else
                             {
                                 $ajax['status']=false;
-                                $ajax['system_message']=$this->lang->line("MSG_CREATE_FAIL");
+                                $ajax['system_message']=$this->lang->line("NO_SERVICES_IN_UISC");
                                 $this->jsonReturn($ajax);
                             }
                         }
                         else
                         {
                             $ajax['status']=false;
-                            $ajax['system_message']=$this->lang->line("NO_SERVICES_IN_UISC");
+                            $ajax['system_message']=$this->lang->line("MSG_INCOME_AMOUNT_INVALID");
                             $this->jsonReturn($ajax);
                         }
                     }
                     else
                     {
                         $ajax['status']=false;
-                        $ajax['system_message']=$this->lang->line("MSG_INCOME_AMOUNT_INVALID");
+                        $ajax['system_message']=$this->lang->line("SERVICE_AMOUNT_LIMIT");
                         $this->jsonReturn($ajax);
                     }
                 }

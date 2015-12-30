@@ -102,7 +102,9 @@ class Secret_question_change extends Root_Controller
         }
         else
         {
-            $userDetail = $this->input->post('user_detail');
+            $userDetail = array();
+            $userDetail['ques_id'] = $this->input->post('ques_id');
+            $userDetail['ques_ans'] = $this->input->post('ques_ans');
 
             if($id>0)
             {
@@ -148,8 +150,8 @@ class Secret_question_change extends Root_Controller
     {
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('user_detail[ques_id]',$this->lang->line('SECRET_QUESTION'),'required');
-        $this->form_validation->set_rules('user_detail[ques_ans]',$this->lang->line('ANSWER'),'required');
+        $this->form_validation->set_rules('ques_id',$this->lang->line('SECRET_QUESTION'),'required');
+        $this->form_validation->set_rules('ques_ans',$this->lang->line('ANSWER'),'required');
 
         if($this->form_validation->run() == FALSE)
         {

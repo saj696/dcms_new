@@ -16,11 +16,13 @@ class Notice_view_model extends CI_Model
         $user=User_helper::get_user();
         $CI =& get_instance();
         $this->db->select('notice_view.*');
-        $this->db->select('notice.notice_type, notice.notice_title, notice.notice_details, notice.upload_file, notice.status');
+        $this->db->select('notice.notice_type, notice.notice_title, notice.notice_details, notice.upload_file, notice.status, notice.create_by');
         $this->db->select('user_group.name_bn');
+        $this->db->select('user_table.name_bn sender_name');
         $this->db->from($CI->config->item('table_notice_view')." notice_view");
         $this->db->join($CI->config->item('table_notice')." notice",'notice.id = notice_view.notice_id', 'LEFT');
         $this->db->join($CI->config->item('table_user_group')." user_group",'user_group.id = notice_view.sender_user_group', 'LEFT');
+        $this->db->join($CI->config->item('table_users')." user_table",'user_table.id = notice.create_by', 'LEFT');
         $this->db->where('notice_view.status', $this->config->item('STATUS_ACTIVE'));
         $this->db->where('notice.status', $this->config->item('STATUS_ACTIVE'));
         $this->db->where('notice.notice_type !=', 3);
@@ -48,7 +50,7 @@ class Notice_view_model extends CI_Model
             }
             else
             {
-                $user['upload_status']=$CI->lang->line('FILE_NOT_UPLOADED');
+                $result['upload_status']=$CI->lang->line('FILE_NOT_UPLOADED');
             }
 
             if($result['notice_type']==2)

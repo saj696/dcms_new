@@ -169,3 +169,6 @@ $config['time_barrier'] = '2015-11-01';
 //////////// User Level ///////////
 $config['user_level_min']=2;
 $config['user_level_max']=13;
+
+// Total service amount limit
+$config['service_amount_limit']=10000;

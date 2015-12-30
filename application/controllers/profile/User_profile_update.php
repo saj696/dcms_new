@@ -103,7 +103,10 @@ class User_profile_update extends Root_Controller
         }
         else
         {
-            $userDetail = $this->input->post('user_detail');
+            $userDetail = array();
+            $userDetail['password'] = $this->input->post('password');
+            $userDetail['confirm_password'] = $this->input->post('confirm_password');
+
             if($id>0)
             {
                 if($userDetail['password']!="")
@@ -194,33 +197,33 @@ class User_profile_update extends Root_Controller
 
     private function check_validation()
     {
-        if($this->User_profile_update_model->check_username_existence($this->input->post("user_detail[username]"),$this->input->post('id')))
-        {
-            $this->message = $this->lang->line('USERNAME_EXISTS');
-            return false;
-        }
-
-        $this->load->library('form_validation');
-        $user_table =$this->config->item('table_users');
-
-        if (!$this->db->table_exists($user_table))
-        {
-            $this->message = $this->lang->line('USER_TABLE_NOT_AVAILABLE');
-            return false;
-        }
-
-        $this->form_validation->set_rules('user_detail[name_bn]',$this->lang->line('NAME_BN'),'required',array('required' => $this->lang->line('NAME_REQUIRED')));
-        $this->form_validation->set_rules('user_detail[username]',$this->lang->line('USER_NAME'),'required',array('required' => $this->lang->line('USER_ID_REQUIRED')));
+//        if($this->User_profile_update_model->check_username_existence($this->input->post("user_detail[username]"),$this->input->post('id')))
+//        {
+//            $this->message = $this->lang->line('USERNAME_EXISTS');
+//            return false;
+//        }
+//
+//        $this->load->library('form_validation');
+//        $user_table =$this->config->item('table_users');
+//
+//        if (!$this->db->table_exists($user_table))
+//        {
+//            $this->message = $this->lang->line('USER_TABLE_NOT_AVAILABLE');
+//            return false;
+//        }
+//
+//        $this->form_validation->set_rules('user_detail[name_bn]',$this->lang->line('NAME_BN'),'required',array('required' => $this->lang->line('NAME_REQUIRED')));
+//        $this->form_validation->set_rules('user_detail[username]',$this->lang->line('USER_NAME'),'required',array('required' => $this->lang->line('USER_ID_REQUIRED')));
         //$this->form_validation->set_rules('user_detail[password]',$this->lang->line('PASSWORD'),'required');
         //$this->form_validation->set_rules('user_detail[confirm_password]',$this->lang->line('PASSWORD'),'required');
         //$this->form_validation->set_rules('user_detail[email]',$this->lang->line('EMAIL'),'required|valid_email');
         //$this->form_validation->set_rules('user_detail[mobile]',$this->lang->line('MOBILE_NUMBER'),'required');
 
-        if($this->form_validation->run() == FALSE)
-        {
-            $this->message=validation_errors();
-            return false;
-        }
+//        if($this->form_validation->run() == FALSE)
+//        {
+//            $this->message=validation_errors();
+//            return false;
+//        }
         return true;
     }
 

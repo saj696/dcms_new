@@ -31,6 +31,7 @@ class Registered_union_report extends CI_Controller
             $this->search();
         }
     }
+
     private function report_list($format="")
     {
         if($format!="pdf")

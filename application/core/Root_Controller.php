@@ -124,7 +124,7 @@ class Root_Controller extends CI_Controller
     {
         $ajax['status']=true;
         $user=User_helper::get_user();
-        if($user->user_group_id==$this->config->item('UISC_GROUP_ID'))
+        if($user->user_group_level==$this->config->item('UISC_GROUP_ID'))
         {
             $profile_status= User_helper::complete_user_profile_check();
             if(!$profile_status)

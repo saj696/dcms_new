@@ -43,7 +43,7 @@ $modules=User_helper::get_reports_task_module();
     }
     elseif($user_group_id == $CI->config->item('UISC_GROUP_ID'))
     {
-        $title = "ইউআইএসসি এর প্রতিবেদন";
+        $title = "ডিজিটাল সেন্টারের প্রতিবেদন";
     }
     else
     {

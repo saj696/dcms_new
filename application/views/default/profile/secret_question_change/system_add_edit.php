@@ -30,7 +30,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
                     <label class="control-label pull-right"><?php echo $CI->lang->line('SECRET_QUESTION'); ?><span style="color:#FF0000">*</span></label>
                 </div>
                 <div class="col-sm-4 col-xs-8">
-                    <select name="user_detail[ques_id]" class="selectbox-1">
+                    <select name="ques_id" class="selectbox-1">
                         <option value=""><?php echo $this->lang->line('SELECT');?></option>
                         <?php
                         foreach($questions as $question)
@@ -49,7 +49,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
                     <label class="control-label pull-right"><?php echo $CI->lang->line('ANSWER'); ?><span style="color:#FF0000">*</span></label>
                 </div>
                 <div class="col-sm-4 col-xs-8">
-                    <input type="text" name="user_detail[ques_ans]" class="inputbx-1" value="<?php echo $userInfo['ques_ans'];?>">
+                    <input type="text" name="ques_ans" class="inputbx-1" value="<?php echo $userInfo['ques_ans'];?>">
                 </div>
             </div>
         </div>

@@ -34,7 +34,7 @@ $CI=& get_instance();
             </div>
         </div>
         <div class="clearfix"></div>
-        <div class="box round first">
+        <div class="box round first main_div">
             <h2><?php echo $this->lang->line('PROTIBEDON_TEMPLATE')?></h2>
             <div class="block ">
                 <form action="<?php echo $CI->get_encoded_url('user/service_template/index/save') ?>" class="signup" id="form_id" method="post" accept-charset="utf-8">
@@ -90,7 +90,7 @@ $CI=& get_instance();
 
                                 <th class="fieldcell">
                                     <div class="input text">
-                                        <input name="service_earning[]" id="service_earning" class="validate[number]" type="text" maxlength="5"/>
+                                        <input name="service_earning[]" id="service_earning" class="validate[number] earning_amount" type="text" maxlength="5"/>
                                     </div>
                                 </th>
 
@@ -168,6 +168,28 @@ $CI=& get_instance();
         {
             $("#uploadclick").submit();
         });
+
+        $(document).on("keyup",".earning_amount",function()
+        {
+            var amount_attr = $(this).closest('.main_div').find('.earning_amount');
+            var amount_sum = 0;
+
+            amount_attr.each(function()
+            {
+                var val = $(this).val();
+                if(val)
+                {
+                    val = parseFloat( val.replace( /^\$/, "" ));
+                    amount_sum += !isNaN( val ) ? val : 0;
+                }
+            });
+
+            if(amount_sum>=<?php echo $CI->config->item('service_amount_limit');?>)
+            {
+                alert('<?php echo $CI->lang->line('SERVICE_AMOUNT_LIMIT');?>');
+                $(this).val('');
+            }
+        });
     });
 
     var ExId = 0;
@@ -196,7 +218,7 @@ $CI=& get_instance();
             echo "<option value='" . $service_list['service_id']. "'>" . $service_list['service_name'] . "</option>";
         ?>";
         var cell1 = row.insertCell(3);
-        cell1.innerHTML = "<input type='text' name='service_earning[]' id='service_earning" + ExId + "' class='form-control' maxlength='5' />\n\
+        cell1.innerHTML = "<input type='text' name='service_earning[]' id='service_earning" + ExId + "' class='form-control earning_amount' maxlength='5' />\n\
         <input type='hidden' id='task_id[]' name='task_id[]' value=''/>\n\
         <input type='hidden' id='elmIndex[]' name='elmIndex[]' value='" + ExId + "'/>";
         cell1.style.cursor = "default";

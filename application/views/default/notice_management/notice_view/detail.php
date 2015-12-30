@@ -36,22 +36,22 @@ $CI=& get_instance();
                         <th><?php echo $CI->lang->line('NOTICE_DETAILS'); ?></th>
                         <th><?php echo $NoticeInfo['notice_details'];?></th>
                     </tr>
+                    <?php
+                    if(!empty($NoticeInfo['upload_file']))
+                    {
+                    ?>
                     <tr>
                         <th><?php echo $CI->lang->line('DOWNLOAD'); ?></th>
                         <th>
-                            <?php
-                            if(!empty($NoticeInfo['upload_file']))
-                            {
-                                ?>
-                                <?php echo $NoticeInfo['upload_file'];?>
-                                <a href="<?php echo base_url().'images/notice/'.$NoticeInfo['upload_file']?>" target="_blank" class="external">
-                                    <span style='color:red;'><?php echo $CI->lang->line('CLICK_HERE_TO_DOWNLOAD');?></span>
-                                </a>
-                            <?php
-                            }
-                            ?>
+                            <?php echo $NoticeInfo['upload_file'];?>
+                            <a href="<?php echo base_url().'images/notice/'.$NoticeInfo['upload_file']?>" target="_blank" class="external">
+                                <span style='color:red;'><?php echo $CI->lang->line('CLICK_HERE_TO_DOWNLOAD');?></span>
+                            </a>
                         </th>
                     </tr>
+                    <?php
+                    }
+                    ?>
                     </thead>
                 </table>
             </div>

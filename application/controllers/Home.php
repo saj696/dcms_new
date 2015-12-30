@@ -61,10 +61,9 @@ class Home extends Root_Controller
             {
                 $this->login_page();//login page view
             }
-
         }
-
     }
+
     public function logout()
     {
         $this->session->sess_destroy();
