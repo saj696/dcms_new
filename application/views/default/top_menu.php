@@ -103,10 +103,10 @@ else
                     </li>
                     <li><a class="external" href="#">রেজিষ্ট্রেশন নির্দেশনা</a>
                         <ul class="subs">
-                            <li><a class="external" href="<?php echo base_url().'website/registration_direction';?>">সেন্টার রেজিস্ট্রেশন নির্দেশনা</a></li>
-                            <li><a class="external" href="<?php echo base_url().'website/registration_direction';?>">উদ্যোক্তা রেজিস্ট্রেশন নির্দেশনা</a></li>
-                            <li><a class="external" href="<?php echo base_url().'website/registration_direction';?>">প্রোফাইল আপডেটের ম্যানুয়াল</a></li>
-                            <li><a class="external" href="<?php echo base_url().'website/registration_direction';?>">রেজিষ্ট্রেশন অনুমোদনের পদ্ধতি</a></li>
+                            <li><a class="external" href="<?php echo base_url().'website/registration_direction/center';?>">সেন্টার রেজিস্ট্রেশন নির্দেশনা</a></li>
+                            <li><a class="external" href="<?php echo base_url().'website/registration_direction/entrepreneur';?>">উদ্যোক্তা রেজিস্ট্রেশন নির্দেশনা</a></li>
+                            <li><a class="external" href="<?php echo base_url().'website/registration_direction/profile_update';?>">প্রোফাইল আপডেটের ম্যানুয়াল</a></li>
+                            <li><a class="external" href="<?php echo base_url().'website/registration_direction/approval';?>">রেজিষ্ট্রেশন অনুমোদনের পদ্ধতি</a></li>
                             <li><a class="external" href="<?php echo base_url().'website/registration_form';?>">রেজিস্ট্রেশন ফরম</a></li>
                         </ul>
                     </li>
