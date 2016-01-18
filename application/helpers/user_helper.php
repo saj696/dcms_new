@@ -304,7 +304,7 @@ class User_helper
         $user_info['investment_info'] = $CI->db->get()->row();
         if(sizeof($user_info['investment_info'])>0)
         {
-            if(empty($user_info['investment_info']->self_investment) && empty($user_info['investment_info']->invest_debt) && empty($user_info['investment_info']->invested_money) && empty($user_info['investment_info']->invest_sector))
+            if(empty($user_info['investment_info']->self_investment) && empty($user_info['investment_info']->invest_debt) && empty($user_info['investment_info']->invested_money) && $user_info['investment_info']->invest_sector=='')
             {
                 return false;
             }
