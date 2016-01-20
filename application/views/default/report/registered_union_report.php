@@ -95,7 +95,7 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                                             <td ><?php echo $this->lang->line('UPAZILLA');?> </td>
                                             <td >&nbsp;</td>
                                             <td align="right"><?php echo $this->lang->line('TOTAL');?>:</td>
-                                            <td style="text-align: center;"><?php echo $total_upazila; ?></td>
+                                            <td style="text-align: center;"><?php echo $total_upazila_man+$total_upazila_woman;//$total_upazila; ?></td>
                                             <td style="text-align: center;"><?php echo $total_upazila_man; ?></td>
                                             <td style="text-align: center;"><?php echo $total_upazila_woman; ?></td>
                                         </tr>
@@ -115,7 +115,7 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                                             <td >&nbsp;</td>
                                             <td >&nbsp;</td>
                                             <td align="right"><?php echo $this->lang->line('TOTAL');?>:</td>
-                                            <td style="text-align: center;"><?php echo $total_zila; ?></td>
+                                            <td style="text-align: center;"><?php echo $total_zila_man+$total_zila_woman;//$total_zila; ?></td>
                                             <td style="text-align: center;"><?php echo $total_zila_man; ?></td>
                                             <td style="text-align: center;"><?php echo $total_zila_woman; ?></td>
                                         </tr>
@@ -134,7 +134,7 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                                             <td >&nbsp;</td>
                                             <td >&nbsp;</td>
                                             <td align="right"><?php echo $this->lang->line('TOTAL');?>:</td>
-                                            <td style="text-align: center;"><?php echo $total_division; ?></td>
+                                            <td style="text-align: center;"><?php echo $total_division_man+$total_division_woman;//$total_division; ?></td>
                                             <td style="text-align: center;"><?php echo $total_division_man; ?></td>
                                             <td style="text-align: center;"><?php echo $total_division_woman; ?></td>
                                         </tr>
@@ -176,19 +176,19 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
 
                                     }
                                     $union_total=$getUiscInfos[$i]['total_user'];
-                                    $total_upazila=$total_upazila+$union_total;
+                                    //$total_upazila=$total_upazila+$union_total;
                                     $total_upazila_man=$total_upazila_man+$union_man;
                                     $total_upazila_woman=$total_upazila_woman+$union_woman;
 
-                                    $total_zila=$total_zila+$union_total;
+                                    //$total_zila=$total_zila+$union_total;
                                     $total_zila_man=$total_zila_man+$union_man;
                                     $total_zila_woman=$total_zila_woman+$union_woman;
 
-                                    $total_division=$total_division+$union_total;
+                                    //$total_division=$total_division+$union_total;
                                     $total_division_man=$total_division_man+$union_man;
                                     $total_division_woman=$total_division_woman+$union_woman;
 
-                                    $total=$total+$union_total;
+                                    //$total=$total+$union_total;
                                     $total_man=$total_man+$union_man;
                                     $total_woman=$total_woman+$union_woman;
 
@@ -214,7 +214,7 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                                 <td ><?php echo $this->lang->line('UPAZILLA');?> </td>
                                 <td >&nbsp;</td>
                                 <td align="right"><?php echo $this->lang->line('TOTAL');?>:</td>
-                                <td style="text-align: center;"><?php echo $total_upazila; ?></td>
+                                <td style="text-align: center;"><?php echo $total_upazila_man+$total_upazila_woman;//$total_upazila; ?></td>
                                 <td style="text-align: center;"><?php echo $total_upazila_man; ?></td>
                                 <td style="text-align: center;"><?php echo $total_upazila_woman; ?></td>
                             </tr>
@@ -224,7 +224,7 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                                 <td >&nbsp;</td>
                                 <td >&nbsp;</td>
                                 <td align="right"><?php echo $this->lang->line('TOTAL');?>:</td>
-                                <td style="text-align: center;"><?php echo $total_zila; ?></td>
+                                <td style="text-align: center;"><?php echo $total_zila_man+$total_zila_woman;//$total_zila; ?></td>
                                 <td style="text-align: center;"><?php echo $total_zila_man; ?></td>
                                 <td style="text-align: center;"><?php echo $total_zila_woman; ?></td>
                             </tr>
@@ -234,13 +234,13 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                                 <td >&nbsp;</td>
                                 <td >&nbsp;</td>
                                 <td align="right"><?php echo $this->lang->line('TOTAL');?>:</td>
-                                <td style="text-align: center;"><?php echo $total_division; ?></td>
+                                <td style="text-align: center;"><?php echo $total_division_man+$total_division_woman;//$total_division; ?></td>
                                 <td style="text-align: center;"><?php echo $total_division_man; ?></td>
                                 <td style="text-align: center;"><?php echo $total_division_woman; ?></td>
                             </tr>
                             <tr>
                                 <td colspan="5" align="right"><?php echo $this->lang->line('IN_TOTAL');?>: </td>
-                                <td style="text-align: center;"><?php echo $total; ?></td>
+                                <td style="text-align: center;"><?php echo $total_man+$total_woman;//$total; ?></td>
                                 <td style="text-align: center;"><?php echo $total_man; ?></td>
                                 <td style="text-align: center;"><?php echo $total_woman; ?></td>
                             </tr>
