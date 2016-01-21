@@ -65,10 +65,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '127.0.0.1',
+	'hostname' => 'localhost',
 	'username' => 'root',
-	'password' => 'vertrigo',
-	'database' => 'dcms_new',
+	'password' => '',
+	'database' => 'dcms',
 	//'database' => 'dcms_data_migrate',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
