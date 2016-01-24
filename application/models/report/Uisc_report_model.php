@@ -28,6 +28,7 @@ class Uisc_report_model extends CI_Model
     public function get_income_info($from_date, $to_date)
     {
         $user = User_helper::get_user();
+
         $CI = & get_instance();
 
         $CI->db->from($CI->config->item('table_invoices').' invoices');

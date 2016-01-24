@@ -719,9 +719,10 @@ class Dashboard_helper
 
             $CI->db->from($CI->config->item('table_invoices'));
             $CI->db->select('total_income');
-            $CI->db->where('zillaid',$user->zilla);
+            /*$CI->db->where('zillaid',$user->zilla);
             $CI->db->where('upazilaid',$user->upazila);
-            $CI->db->where('unionid',$user->unioun);
+            $CI->db->where('unionid',$user->unioun);*/
+            $CI->db->where('invoices.uisc_id', $user->uisc_id);
             $CI->db->where('invoice_date',$day);
             $query = $CI->db->get();
             $data = $query->row();
