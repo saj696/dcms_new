@@ -30,7 +30,7 @@ $CI=& get_instance();
         <div class="block">
             <div class="box round first">
                 <h6 style="text-align: right;"><?php echo $this->lang->line('APPLIED_DATE').":  ".date('d M Y', $uisc_detail['create_date'])?></h6>
-                <h6 style="text-align: right;"><?php echo $this->lang->line('USERNAME').":  ".$uisc_detail['username']?></h6>
+                <h6 style="text-align: right;"><?php if(isset($uisc_detail['username'])){echo $this->lang->line('USERNAME').":  ".$uisc_detail['username']; } ?></h6>
                 <h3><?php echo $uisc_detail['uisc_name'];?></h3>
                 <h2><?php echo $this->lang->line('GENERAL_INFO')?></h2>
                 <div class="block">

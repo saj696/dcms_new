@@ -103,6 +103,7 @@ class Entrepreneur_approval_model extends CI_Model
 
         $CI->db->from($CI->config->item('table_uisc_infos').' uiscinfos');
         $CI->db->select('uiscinfos.*');
+        $CI->db->select('user.username');
         $CI->db->select('entrepreneurinfos.id entrepreneur_no,entrepreneurinfos.entrepreneur_type, entrepreneurinfos.entrepreneur_name, entrepreneurinfos.entrepreneur_father_name,entrepreneurinfos.entrepreneur_mother_name, entrepreneurinfos.entrepreneur_qualification, entrepreneurinfos.entrepreneur_mobile, entrepreneurinfos.entrepreneur_email, entrepreneurinfos.entrepreneur_sex, entrepreneurinfos.entrepreneur_address');
         $CI->db->select('secretaryinfos.secretary_name, secretaryinfos.secretary_email, secretaryinfos.secretary_mobile, secretaryinfos.secretary_address');
         $CI->db->select('deviceinfos.modem, deviceinfos.connection_type, deviceinfos.ip_address');
@@ -116,6 +117,8 @@ class Entrepreneur_approval_model extends CI_Model
         $CI->db->select('municipal_word.wardname municipal_word_name');
 
         $CI->db->where('uiscinfos.id', $id);
+
+        $CI->db->join($CI->config->item('table_users').' user','user.uisc_id = uiscinfos.id', 'LEFT');
 
         $CI->db->join($CI->config->item('table_divisions').' divisions','divisions.divid = uiscinfos.division', 'LEFT');
         $CI->db->join($CI->config->item('table_zillas').' zillas','zillas.zillaid = uiscinfos.zilla', 'LEFT');

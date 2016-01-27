@@ -152,7 +152,6 @@ class Esheba_including extends Root_Controller
         else
         {
 
-            var_dump($uisc);
             //$service_detail['createdby']=$user->id;
             $service_detail['created_time']=time();
             $service_detail['uisc_id']=$uisc->id;

@@ -105,7 +105,6 @@ class Entrepreneur_approval extends Root_Controller
         $detail_info = $this->Entrepreneur_approval_model->fetch_uisc_detail_info($id);
         $detail_info['equips'] = $this->Entrepreneur_approval_model->fetch_uisc_equipments($id);
         $data['uisc_detail'] = $detail_info;
-
         if($this->permissions['edit'])
         {
             if($data['uisc_detail'])

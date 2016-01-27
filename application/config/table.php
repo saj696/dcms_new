@@ -49,3 +49,5 @@ $config['table_notice_view'] = 'notice_view_infos';
 $config['table_faqs'] = 'faqs';
 $config['table_entrepreneur_chairmen_info'] = 'entrepreneur_chairmen_info';
 $config['table_media'] = 'media_upload';
+$config['table_api_services'] = 'api_services';
+$config['table_api_auth_token'] = 'api_auth_token';
