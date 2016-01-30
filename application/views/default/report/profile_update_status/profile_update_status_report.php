@@ -21,7 +21,7 @@ $user = User_helper::get_user();
 
         <div class="clearfix"></div>
         <form class="report_form" id="system_save_form"
-              action="<?php echo $CI->get_encoded_url('report/profile_update_status/profile_update_status_report/get_profile_update_status'); ?>"
+              action="<?php echo $CI->get_encoded_url('report/profile_update_status/profile_update_status_report_view/index/list'); ?>"
               method="get">
             <div class="row widget">
                 <div class="widget-header">

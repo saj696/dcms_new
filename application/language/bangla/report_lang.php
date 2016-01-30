@@ -53,6 +53,7 @@ $lang['PDC'] = 'পিডিসি';
 $lang['CDC'] = 'সিডিসি';
 $lang['PLEASE_INPUT_REQUIRE_FIELD'] = 'অনুগ্রহপূর্বক লাল তারকা (*) চিহ্ন তথ্য গুলো পূরণ বাঞ্ছনীয়।';
 $lang['SERVICE_HOLDER'] = 'সেবা গ্রহীতা';
+//$lang[''];
 
 
 //// //UISC REGISTRATION
@@ -204,3 +205,10 @@ $lang['TOTAL_UDC_SERVICE_HOLDER_PERCENTAGE']="ইউডিসি প্রতি
 
 //////// service report
 $lang['TOTAL_GOVERNMENT_SERVICE']="সরকারি";
+
+
+//////// USer profile update status report
+
+$lang['REPORT_CITYCORPORATION_USER_PROFILE_UPDATE_STATUS']= "সিটি কর্পোরেশন ভিত্তিক উদ্যোক্তাদের প্রোফাইল আপডেট স্ট্যাটাস প্রতিবেদন";
+$lang['REPORT_UNION_USER_PROFILE_UPDATE_STATUS']= "ইউনিয়নভিত্তিক  ভিত্তিক উদ্যোক্তাদের প্রোফাইল আপডেট স্ট্যাটাস প্রতিবেদন";
+$lang['REPORT_MUNICIPAL_USER_PROFILE_UPDATE_STATUS']= "পৌরসভাভিত্তিক  ভিত্তিক উদ্যোক্তাদের প্রোফাইল আপডেট স্ট্যাটাস প্রতিবেদন";

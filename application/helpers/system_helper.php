@@ -240,7 +240,7 @@ class System_helper
         include(FCPATH."mpdf/mpdf.php");
         $mpdf=new mPDF();
         $mpdf->useAdobeCJK=true;
-        $mpdf->SetAutoFont(AUTOFONT_ALL);
+        //$mpdf->SetAutoFont(AUTOFONT_ALL);
         //$mpdf->WriteHTML(file_get_contents(base_url().'assets/templates/default/fonts/mpdf.css'),1);
         $mpdf->WriteHTML($html);
         $mpdf->Output();
