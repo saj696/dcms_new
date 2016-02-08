@@ -82,9 +82,9 @@ $CI =& get_instance();
         <div class="row-fluid">
             <div class="span-9">
                 <div class="widget">
-                    <h5 style="color: #cd0a0a; padding: 5px;">
+                    <!--<h5 style="color: #cd0a0a; padding: 5px;">
                         ডিজিটাল সেন্টার ম্যানেজমেন্ট সিস্টেমের ডাটা মাইগ্রেশনের কাজ চলমান রয়েছে। উদ্যোক্তাদের সিস্টেম থেকে রিপোর্ট আপলোড টেমপ্লেট ডাউনলোড করে/সিস্টেম থেকে বিগত তারিখসহ বর্তমান রিপোর্ট আপলোড করার অনুরোধ জানাচ্ছি। রিপোর্ট আপলোড সংক্রান্ত সহযোগিতার জন্য হেল্পডেস্কে যোগাযোগের অনুরোধ করছি।
-                    </h5>
+                    </h5>-->
                     <div class="widget-header" style="padding-top:10px; padding-bottom:35px;">
                         <div class="title" style="font-family:nikoshBAN !important; font-size:19px !important;">
                             <marquee width="100%">

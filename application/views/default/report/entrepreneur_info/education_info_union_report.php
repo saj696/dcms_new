@@ -112,21 +112,21 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                     </tr>
                     <tr>
                         <?php
-                        $total_percentage_secondary=($total_entrepreneur*$total_secondary)/100;
-                        $total_percentage_higher_secondary=($total_entrepreneur*$total_higher_secondary)/100;
-                        $total_percentage_diploma=($total_entrepreneur*$total_diploma)/100;
-                        $total_percentage_graduate=($total_entrepreneur*$total_graduate)/100;
-                        $total_percentage_postgraduate=($total_entrepreneur*$total_postgraduate)/100;
-                        $total_percentage_other=($total_entrepreneur*$total_other)/100;
+                        $total_percentage_secondary=(100*$total_secondary)/$total_entrepreneur;
+                        $total_percentage_higher_secondary=(100*$total_higher_secondary)/$total_entrepreneur;
+                        $total_percentage_diploma=(100*$total_diploma)/$total_entrepreneur;
+                        $total_percentage_graduate=(100*$total_graduate)/$total_entrepreneur;
+                        $total_percentage_postgraduate=(100*$total_postgraduate)/$total_entrepreneur;
+                        $total_percentage_other=(100*$total_other)/$total_entrepreneur;
                         ?>
                         <td style="text-align: right"><?php echo $this->lang->line('TOTAL_PERCENTAGE');?></td>
                         <td><?php //echo System_helper::Get_Eng_to_Bng($total_entrepreneur);?></td>
-                        <td><?php echo System_helper::Get_Eng_to_Bng($total_percentage_secondary);?></td>
-                        <td><?php echo System_helper::Get_Eng_to_Bng($total_percentage_higher_secondary);?></td>
-                        <td><?php echo System_helper::Get_Eng_to_Bng($total_percentage_diploma);?></td>
-                        <td><?php echo System_helper::Get_Eng_to_Bng($total_percentage_graduate);?></td>
-                        <td><?php echo System_helper::Get_Eng_to_Bng($total_percentage_postgraduate);?></td>
-                        <td><?php echo System_helper::Get_Eng_to_Bng($total_percentage_other);?></td>
+                        <td><?php echo System_helper::Get_Eng_to_Bng(round($total_percentage_secondary,2));?></td>
+                        <td><?php echo System_helper::Get_Eng_to_Bng(round($total_percentage_higher_secondary,2));?></td>
+                        <td><?php echo System_helper::Get_Eng_to_Bng(round($total_percentage_diploma,2));?></td>
+                        <td><?php echo System_helper::Get_Eng_to_Bng(round($total_percentage_graduate,2));?></td>
+                        <td><?php echo System_helper::Get_Eng_to_Bng(round($total_percentage_postgraduate,2));?></td>
+                        <td><?php echo System_helper::Get_Eng_to_Bng(round($total_percentage_other,2));?></td>
                     </tr>
                 <?php
                 }

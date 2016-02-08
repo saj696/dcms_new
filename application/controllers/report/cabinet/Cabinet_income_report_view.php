@@ -6,6 +6,7 @@ if (!defined('BASEPATH'))
 class Cabinet_income_report_view extends CI_Controller
 {
     public $permissions;
+
     function __construct()
     {
         parent::__construct();
@@ -17,31 +18,43 @@ class Cabinet_income_report_view extends CI_Controller
 
     }
 
-    public function index($task="search",$id=0)
+    public function index($task = "search", $id = 0)
     {
-        if($task=="list")
-        {
+        if ($task == "list") {
             $this->report_list();
-        }
-        else if($task=="pdf")
-        {
+        } else if ($task == "pdf") {
             $this->report_list("pdf");
-        }
-        else
-        {
+        } else {
             $this->search();
         }
     }
-    private function report_list($format="")
-    {
-        if($format!="pdf")
-        {
 
-            $data['title']=$this->lang->line("REPORT_CABINET_INCOME_TITLE");
-            $from_date=$this->input->get('from_date');
-            $to_date=$this->input->get('to_date');
-            $data['report']=$this->cabinet_report_model->get_cabinet_union_income($from_date,$to_date);
-            $this->load->view('default/report/cabinet/cabinet_union_income_report',$data);
+    private function report_list($format = "")
+    {
+        if ($format != "pdf") {
+
+
+            $data['report_type'] = $report_type = $this->input->get('report_type');
+            $data['from_date'] = $from_date = $this->input->get('from_date');
+            $data['to_date'] = $to_date = $this->input->get('to_date');
+
+            if($report_type==1)
+            {
+                $data['title'] = $this->lang->line("REPORT_CABINET_UNION_INCOME_TITLE");
+                $data['report'] = $this->cabinet_report_model->get_cabinet_union_income($from_date, $to_date);
+                $this->load->view('default/report/cabinet/cabinet_union_income_report', $data);
+            }elseif($report_type==2)
+            {
+                $data['title'] = $this->lang->line("REPORT_CABINET_CITY_CORPORATION_INCOME_TITLE");
+                $data['report'] = $this->cabinet_report_model->get_cabinet_city_corporation_income($from_date, $to_date);
+                $this->load->view('default/report/cabinet/cabinet_city_corporation_income_report', $data);
+            }elseif($report_type==3)
+            {
+                $data['title'] = $this->lang->line("REPORT_CABINET_CITY_CORPORATION_INCOME_TITLE");
+                $data['report'] = $this->cabinet_report_model->get_cabinet_municipal_income($from_date, $to_date);
+                $this->load->view('default/report/cabinet/cabinet_municipal_income_report', $data);
+            }
+
 
             //$division=$this->input->get('division');
             //$zilla=$this->input->get('zilla');
@@ -85,18 +98,16 @@ class Cabinet_income_report_view extends CI_Controller
             //                $data['report']='';
             //                $this->load->view('default/report/cabinet/cabinet_income_report_view',$data);
             //            }
-        }
-        else
-        {
+        } else {
 
             $this->load->model("report/cabinet_report_model");
-            $data['title']=$this->lang->line("REPORT_CABINET_INCOME_TITLE");
-            $division=$this->input->get('division');
-            $zilla=$this->input->get('zilla');
-            $upazila=$this->input->get('upazila');
-            $union=$this->input->get('union');
-            $data['report']=$this->cabinet_report_model->get_cabinet_union_income($division, $zilla, $upazila, $union);
-            $html=$this->load->view('default/report/cabinet/cabinet_union_income_report',$data,true);
+            $data['title'] = $this->lang->line("REPORT_CABINET_INCOME_TITLE");
+            $division = $this->input->get('division');
+            $zilla = $this->input->get('zilla');
+            $upazila = $this->input->get('upazila');
+            $union = $this->input->get('union');
+            $data['report'] = $this->cabinet_report_model->get_cabinet_union_income($division, $zilla, $upazila, $union);
+            $html = $this->load->view('default/report/cabinet/cabinet_union_income_report', $data, true);
             //echo $html;
             System_helper::get_pdf($html);
         }

@@ -153,27 +153,25 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                                         $total_government_service=$invoice['total_gov_service'];
                                         $total_private_service=$invoice['total_private_service'];
                                         $total_local_service=$invoice['total_local_service'];
-                                        if($report_status==99)
-                                        {
-                                            $total_all_service=($total_government_service+$total_private_service+$total_local_service);
+                                        if ($report_status == 99) {
+                                            $total_all_service = ($total_government_service + $total_private_service + $total_local_service);
+                                            $grand_total_government_service += $total_government_service;
+                                            $grand_total_private_service += $total_private_service;
+                                            $grand_total_local_service += $total_local_service;
+                                            $grand_total_all_service += $total_all_service;
+                                        } elseif ($report_status == 1) {
+                                            $total_all_service = ($total_government_service);
+                                            $grand_total_government_service += $total_government_service;
+                                            $grand_total_all_service += $total_all_service;
+                                        } elseif ($report_status == 2) {
+                                            $total_all_service = ($total_private_service);
+                                            $grand_total_private_service += $total_private_service;
+                                            $grand_total_all_service += $total_all_service;
+                                        } elseif ($report_status == 3) {
+                                            $total_all_service = ($total_local_service);
+                                            $grand_total_all_service += $total_all_service;
+                                            $grand_total_all_service += $total_all_service;
                                         }
-                                        elseif($report_status==1)
-                                        {
-                                            $total_all_service=($total_government_service);
-                                        }
-                                        elseif($report_status==2)
-                                        {
-                                            $total_all_service=($total_private_service);
-                                        }
-                                        elseif($report_status==3)
-                                        {
-                                            $total_all_service=($total_local_service);
-                                        }
-                                        else
-                                        {
-
-                                        }
-
 
                                         ?>
                                         <tr style="background: #cccccc">
@@ -321,89 +319,44 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                                 }
                             }
                             ?>
-                        <!--                            <tr>-->
-                        <!--                                <th colspan="5" style="text-align: right">--><?php //echo $this->lang->line('UPAZILLA');?><!-- --><?php //echo $this->lang->line('TOTAL');?><!--</th>-->
-                        <!--                                --><?php
-                        //                                if($report_status==1)
-                        //                                {
-                        //                                    ?>
-                        <!--                                    <th>--><?php //echo System_helper::Get_Eng_to_Bng($city_corporation_total_service_holder);?><!--</th>-->
-                        <!--                                    <th>--><?php //echo System_helper::Get_Eng_to_Bng($city_corporation_total_monthly_income);?><!--</th>-->
-                        <!--                                    <th>--><?php //echo System_helper::Get_Eng_to_Bng($city_corporation_total_service);?><!--</th>-->
-                        <!--                                --><?php
-                        //                                }
-                        //                                else if($report_status==2)
-                        //                                {
-                        //                                    ?>
-                        <!--                                    <th>--><?php //echo System_helper::Get_Eng_to_Bng($city_corporation_total_service_holder);?><!--</th>-->
-                        <!--                                --><?php
-                        //                                }
-                        //                                else if($report_status==3)
-                        //                                {
-                        //                                    ?>
-                        <!--                                    <th>--><?php //echo System_helper::Get_Eng_to_Bng($city_corporation_total_monthly_income);?><!--</th>-->
-                        <!--                                --><?php
-                        //                                }
-                        //                                else if($report_status==4)
-                        //                                {
-                        //                                    ?>
-                        <!--                                    <th>--><?php //echo System_helper::Get_Eng_to_Bng($city_corporation_total_service);?><!--</th>-->
-                        <!--                                --><?php
-                        //                                }
-                        //                                else
-                        //                                {
-                        //                                    ?>
-                        <!---->
-                        <!--                                --><?php
-                        //                                }
-                        //                                ?>
-                        <!---->
-                        <!--                            </tr>-->
                         <?php
                         }
                     }
                 }
                 ?>
-                    <!--                <tr>-->
-                    <!--                    <th colspan="5" style="text-align: right">--><?php //echo $this->lang->line('TOTAL');?><!--</th>-->
-                    <!--                    --><?php
-                    //                    if($report_status==1)
-                    //                    {
-                    //                        ?>
-                    <!--                        <th>--><?php //echo System_helper::Get_Eng_to_Bng($grand_total_service_holder);?><!--</th>-->
-                    <!--                        <th>--><?php //echo System_helper::Get_Eng_to_Bng($grand_total_monthly_income);?><!--</th>-->
-                    <!--                        <th>--><?php //echo System_helper::Get_Eng_to_Bng($grand_total_service);?><!--</th>-->
-                    <!--                    --><?php
-                    //                    }
-                    //                    else if($report_status==2)
-                    //                    {
-                    //                        ?>
-                    <!--                        <th>--><?php //echo System_helper::Get_Eng_to_Bng($grand_total_service_holder);?><!--</th>-->
-                    <!--                    --><?php
-                    //                    }
-                    //                    else if($report_status==3)
-                    //                    {
-                    //                        ?>
-                    <!--                        <th>--><?php //echo System_helper::Get_Eng_to_Bng($grand_total_monthly_income);?><!--</th>-->
-                    <!--                    --><?php
-                    //                    }
-                    //                    else if($report_status==4)
-                    //                    {
-                    //                        ?>
-                    <!--                        <th>--><?php //echo System_helper::Get_Eng_to_Bng($grand_total_service);?><!--</th>-->
-                    <!--                    --><?php
-                    //                    }
-                    //                    else
-                    //                    {
-                    //                        ?>
-                    <!---->
-                    <!--                    --><?php
-                    //                    }
-                    //                    ?>
-                    <!--                </tr>-->
+                <tr style="background: #8CCA33">
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td><?php echo $this->lang->line('IN_TOTAL'); ?></td>
+                    <?php
+                    if ($report_status == 99) {
+                        ?>
+                        <td><?php echo System_helper::Get_Eng_to_Bng($grand_total_government_service); ?></td>
+                        <td><?php echo System_helper::Get_Eng_to_Bng($grand_total_private_service); ?></td>
+                        <td><?php echo System_helper::Get_Eng_to_Bng($grand_total_local_service); ?></th>
+                        <?php
+                    } else if ($report_status == 1) {
+                        ?>
+                        <td><?php echo System_helper::Get_Eng_to_Bng($grand_total_government_service); ?></td>
+                        <?php
+                    } else if ($report_status == 2) {
+                        ?>
+                        <td><?php echo System_helper::Get_Eng_to_Bng($grand_total_private_service); ?></td>
+                        <?php
+                    } else if ($report_status == 3) {
+                        ?>
+                        <td><?php echo System_helper::Get_Eng_to_Bng($grand_total_local_service); ?></td>
+                        <?php
+                    }
+                    ?>
+                    <td><?php echo System_helper::Get_Eng_to_Bng($grand_total_all_service); ?></td>
+                </tr>
             <?php
             }
             ?>
+
             </tbody>
         </table>
         </div>

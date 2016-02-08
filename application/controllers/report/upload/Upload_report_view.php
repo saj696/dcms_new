@@ -41,35 +41,55 @@ class Upload_report_view extends CI_Controller
             $zilla=$this->input->get('zilla');
             $data['report_type']=$this->input->get('report_type');
             $status=$this->input->get('status');
-            $from_date=$this->input->get('from_date');
-            $to_date=$this->input->get('to_date');
-            $data['from_date']=$from_date;
-            $data['to_date']=$to_date;
+            $data['month']=$month=$this->input->get('month');
+            $data['year']=$year=$this->input->get('year');
+            $from_date=$data['from_date']=$year.'-'.$month.'-01';
+            $to_date=$data['to_date']=date('Y-m-t',strtotime($year.'-'.$month));
             $data['report_status']=$status;
 
             if(!empty($status) && $this->input->get('report_type')==$this->config->item('ONLINE_UNION_GROUP_ID'))
             {
 
                 $data['title']=$this->lang->line("REPORT_UPLOAD_REPORT_UNION_TITLE");
-                $upazila=$this->input->get('upazila');
+                $data['upazila']=$upazila=$this->input->get('upazila');
                 $union=$this->input->get('union');
+                if(empty($data['upazila']))
+                {
+                    $data['upazilas']=Query_helper::get_info($this->config->item('table_upazilas'),'id',array('zillaid ='.$zilla));
+                    $data['unions']=Query_helper::get_info($this->config->item('table_unions'),'rowid',array('zillaid ='.$zilla));
+                }else
+                {
+                    $data['unions']=Query_helper::get_info($this->config->item('table_unions'),'rowid',array('zillaid ='.$zilla,'upazilaid ='.$data['upazila']));
+                }
+
                 $data['report']=$this->upload_report_model->get_union_report_upload_status($division, $zilla, $upazila, $union, $from_date, $to_date);
                 $this->load->view('default/report/upload/upload_report_union_report',$data);
             }
             else if(!empty($status) && $this->input->get('report_type')==$this->config->item('ONLINE_CITY_CORPORATION_WORD_GROUP_ID'))
             {
                 $data['title']=$this->lang->line("REPORT_UPLOAD_REPORT_CITY_CORPORATION_TITLE");
-                $city_corporation=$this->input->get('city_corporation');
-                $city_corporation_ward=$this->input->get('city_corporation_ward');
-                $data['report']=$this->upload_report_model->get_city_corporation_report_upload_status($division, $zilla, $city_corporation, $city_corporation_ward, $from_date, $to_date);
+                $data['city_corporation']=$city_corporation=$this->input->get('city_corporation');
+                if(empty($city_corporation))
+                {
+                    $data['total_city_corporation']=count(Query_helper::get_info($this->config->item('table_city_corporations'),'rowid',array('zillaid ='.$zilla),1));
+                    $data['total_city_corporation_ward']=count(Query_helper::get_info($this->config->item('table_city_corporation_wards'),'rowid',array('zillaid ='.$zilla),1));
+                }
+                $data['report']=$this->upload_report_model->get_city_corporation_report_upload_status($division, $zilla, $city_corporation, $from_date, $to_date);
                 $this->load->view('default/report/upload/upload_report_city_corporation_report',$data);
             }
             else if(!empty($status) && $this->input->get('report_type')==$this->config->item('ONLINE_MUNICIPAL_WORD_GROUP_ID'))
             {
                 $data['title']=$this->lang->line("REPORT_UPLOAD_REPORT_MUNICIPAL_TITLE");
-                $municipal=$this->input->get('municipal');
-                $municipal_ward=$this->input->get('municipal_ward');
-                $data['report']=$this->upload_report_model->get_municipal_report_upload_status($division, $zilla, $municipal, $municipal_ward, $from_date, $to_date);
+                $data['zilla']=$zilla;
+                if(empty($zilla))
+                {
+                    $data['total']=$this->upload_report_model->get_municipal_by_div_id($division);
+                }else
+                {
+                    $data['total']=$this->upload_report_model->get_municipal_by_zilla_id($zilla);
+                }
+
+                $data['report']=$this->upload_report_model->get_municipal_report_upload_status($division, $zilla, $from_date, $to_date);
                 $this->load->view('default/report/upload/upload_report_municipal_report',$data);
             }
             else

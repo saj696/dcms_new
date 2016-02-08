@@ -1,4 +1,9 @@
 <?php
+/*$user=User_helper::get_user();
+echo "<pre>";
+print_r($user);
+echo "</pre>";
+//die;*/
 if (!defined('BASEPATH')) exit('No direct script access allowed');
     $CI=& get_instance();
 

@@ -4,7 +4,7 @@ $user=User_helper::get_user();
 ?>
 <div class="row show-grid " id="division_option">
     <div class="col-xs-4">
-        <label class="control-label pull-right"><?php echo $CI->lang->line('DIVISION_NAME'); ?></label>
+        <label class="control-label pull-right"><?php echo $CI->lang->line('DIVISION_NAME'); ?><span style="color:#FF0000">*</span></label>
     </div>
     <div class="col-sm-4 col-xs-8">
         <select name="division" id="user_division_id" class="form-control">
@@ -16,7 +16,7 @@ $user=User_helper::get_user();
 </div>
 <div style="display: <?php echo $display_zillas?'block':'none'; ?>" class="row show-grid " id="zilla_option">
     <div class="col-xs-4">
-        <label class="control-label pull-right"><?php echo $CI->lang->line('DISTRICT_NAME'); ?></label>
+        <label class="control-label pull-right"><?php echo $CI->lang->line('DISTRICT_NAME'); ?><span style="color:#FF0000">*</span></label>
     </div>
     <div class="col-sm-4 col-xs-8">
         <select name="zilla" id="user_zilla_id" class="form-control">
@@ -38,18 +38,18 @@ $user=User_helper::get_user();
         </select>
     </div>
 </div>
-<div style="display: <?php echo $display_city_corporation_ward?'block':'none'; ?>" class="row show-grid " id="city_corporation_ward_option">
+<!--<div style="display: <?php /*echo $display_city_corporation_ward?'block':'none'; */?>" class="row show-grid " id="city_corporation_ward_option">
     <div class="col-xs-4">
-        <label class="control-label pull-right"><?php echo $CI->lang->line('CITY_CORPORATION_WARD_NAME'); ?></label>
+        <label class="control-label pull-right"><?php /*echo $CI->lang->line('CITY_CORPORATION_WARD_NAME'); */?></label>
     </div>
     <div class="col-sm-4 col-xs-8">
         <select name="city_corporation_ward" id="user_city_corporation_ward_id" class="form-control">
             <?php
-            $CI->load_view('dropdown',array('drop_down_options'=>$city_corporation_words,'drop_down_default_option'=>$display_city_corporation_ward));
-            ?>
+/*            $CI->load_view('dropdown',array('drop_down_options'=>$city_corporation_words,'drop_down_default_option'=>$display_city_corporation_ward));
+            */?>
         </select>
     </div>
-</div>
+</div>-->
 <script type="text/javascript">
     $(document).ready(function ()
     {
@@ -124,7 +124,7 @@ $user=User_helper::get_user();
                 $("#city_corporation_option").hide();
             }
         });
-        $(document).on("change","#user_citycorporation_id",function()
+        /*$(document).on("change","#user_citycorporation_id",function()
         {
             $("#city_corporation_ward_option").show();
             $("#user_union_id").val("");
@@ -153,6 +153,6 @@ $user=User_helper::get_user();
             {
                 $("#city_corporation_ward_option").hide();
             }
-        });
+        });*/
     });
 </script>

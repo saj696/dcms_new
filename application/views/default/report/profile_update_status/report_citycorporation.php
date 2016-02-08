@@ -69,7 +69,59 @@ $pdf_link = "http://" . $_SERVER['HTTP_HOST'] . str_replace("/list", "/pdf", $_S
                     $zilla = "";
                     $citycorporation = "";
                     $citycorporationward = "";
-                    foreach ($user_info as $item) { ?>
+                    $i = 0;
+                    $z=0;
+                    $d=0;
+                    foreach ($user_info as $item) {
+                        if ($item['citycorporation'] != $citycorporation && $i > 0) {
+                            ?>
+                            <tr style="background: #E38585">
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><?= $this->lang->line('CITYCORPORATION').' '.$this->lang->line('TOTAL_ENTREPRENEUR') ?></td>
+                                <td><?= $i; ?></td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <?php
+                            $i = 0;
+                        }
+                        if ($item['zilla'] != $zilla && $z > 0) {
+                            ?>
+                            <tr style="background: #8CCA33">
+                                <td>&nbsp;</td>
+                                <td><?= $this->lang->line('ZILLA').' '.$this->lang->line('TOTAL_ENTREPRENEUR') ?></td>
+                                <td><?= $z; ?></td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <?php
+                            $z = 0;
+                        }
+                        if ($item['division'] != $division && $d > 0) {
+                            ?>
+                            <tr style="background: #AAAAFF">
+                                <td><?= $this->lang->line('DIVISION').' '.$this->lang->line('TOTAL_ENTREPRENEUR') ?></td>
+                                <td><?= $d; ?></td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <?php
+                            $d = 0;
+                        }
+                        ?>
                         <tr>
                             <td><?= ($item['division'] != $division) ? $item['division'] : "" ?></td>
                             <td><?= ($item['zilla'] != $zilla) ? $item['zilla'] : "" ?></td>
@@ -87,9 +139,45 @@ $pdf_link = "http://" . $_SERVER['HTTP_HOST'] . str_replace("/list", "/pdf", $_S
                         $zilla = $item['zilla'];
                         $citycorporation = $item['citycorporation'];
                         $citycorporationward = $item['citycorporationward'];
+                        $i++;
+                        $z++;
+                        $d++;
 
-
-                    }
+                    }?>
+                    <tr style="background: #E38585">
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td><?= $this->lang->line('MUNICIPALITY').' '.$this->lang->line('TOTAL_ENTREPRENEUR') ?></td>
+                        <td><?= $i; ?></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr style="background: #8CCA33">
+                        <td>&nbsp;</td>
+                        <td><?= $this->lang->line('ZILLA').' '.$this->lang->line('TOTAL_ENTREPRENEUR') ?></td>
+                        <td><?= $z; ?></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr style="background: #AAAAFF">
+                        <td><?= $this->lang->line('DIVISION').' '.$this->lang->line('TOTAL_ENTREPRENEUR') ?></td>
+                        <td><?= $d; ?></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <?php
 
                 }
                 ?>

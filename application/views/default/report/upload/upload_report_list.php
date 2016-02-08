@@ -46,14 +46,14 @@ $user=User_helper::get_user();
 
                 </div>
 
-                <div class="row show-grid ">
+                <!--<div class="row show-grid ">
                     <div class="col-xs-4">
-                        <label class="control-label pull-right"><?php echo $CI->lang->line('STATUS'); ?><span style="color:#FF0000">*</span></label>
+                        <label class="control-label pull-right"><?php /*echo $CI->lang->line('STATUS'); */?><span style="color:#FF0000">*</span></label>
                     </div>
                     <div class="col-sm-4 col-xs-8">
                         <select name="status" id="status" class="form-control">
                             <?php
-                            $report_type=array
+/*                            $report_type=array
                             (
                                 array("value"=>"100", "text"=>$this->lang->line('ALL_DATA_100')),
                                 array("value"=>"60", "text"=>$this->lang->line('REGULAR_41_100')),
@@ -61,24 +61,39 @@ $user=User_helper::get_user();
                                 array("value"=>"0", "text"=>$this->lang->line('CLOSED_0_0')),
                             );
                             $CI->load_view('dropdown',array('drop_down_options'=>$report_type));
+                            */?>
+                        </select>
+                    </div>
+                </div>-->
+                <input type="hidden" name="status" value="100">
+                <div class="row show-grid ">
+                    <div class="col-xs-4">
+                        <label class="control-label pull-right"><?php echo $CI->lang->line('MONTH'); ?><span style="color:#FF0000">*</span></label>
+                    </div>
+                    <div class="col-sm-4 col-xs-8">
+                        <select name="month" id="month" class="form-control">
+                            <option selected="" value=""><?= $CI->lang->line('SELECT') ?></option>
+                            <?php
+                            foreach($CI->config->item('month') as $key=>$item)
+                            {
+                                ?>
+                                <option value="<?= $key ?>"><?= $item ?></option>
+                            <?php
+                            }
                             ?>
                         </select>
                     </div>
                 </div>
                 <div class="row show-grid ">
                     <div class="col-xs-4">
-                        <label class="control-label pull-right"><?php echo $CI->lang->line('FROM_DATE'); ?><span style="color:#FF0000">*</span></label>
+                        <label class="control-label pull-right"><?php echo $CI->lang->line('YEAR'); ?><span style="color:#FF0000">*</span></label>
                     </div>
                     <div class="col-sm-4 col-xs-8">
-                        <input type="text" required="" name="from_date" class="selectbox-1 form-control report_date" value="" />
-                    </div>
-                </div>
-                <div class="row show-grid ">
-                    <div class="col-xs-4">
-                        <label class="control-label pull-right"><?php echo $CI->lang->line('TO_DATE'); ?><span style="color:#FF0000">*</span></label>
-                    </div>
-                    <div class="col-sm-4 col-xs-8">
-                        <input type="text" name="to_date" required="" class="selectbox-1 form-control report_date" value="" />
+                        <select name="year" id="year" class="form-control">
+                            <?php
+                            $CI->load_view('dropdown',array('drop_down_options'=>$CI->config->item('approval_year')));
+                            ?>
+                        </select>
                     </div>
                 </div>
                 <div class="row show-grid">

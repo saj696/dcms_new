@@ -92,6 +92,8 @@ class Media_upload extends Root_Controller
                 'file_name'=>'',
                 'video_link'=>'',
                 'external_link'=>'',
+                'width'=>'',
+                'height'=>'',
                 'print_year'=>'',
                 'status'=>$this->config->item('STATUS_ACTIVE'),
             );

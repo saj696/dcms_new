@@ -7,6 +7,7 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
 //echo "</pre>";
 
 ?>
+
 <html lang="en">
 <head>
     <title><?php echo $title;?></title>
@@ -28,21 +29,27 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                 <h5><?php echo $title;?></h5>
             </div>
 
+            <p style="margin:15px 0px;text-align: center"><?= System_helper::Get_Eng_to_Bng($from_date).' '.$this->lang->line('FROM_DATE') ?> &nbsp;&nbsp;<?= System_helper::Get_Eng_to_Bng($to_date).' '.$this->lang->line('TO_DATE') ?></p>
             <table class="table table-responsive table-bordered">
                 <thead>
-                <tr>
-                    <th colspan="21" class="text-center">
-                        <?php echo System_helper::Get_Eng_to_Bng($from_date);?> <?php echo $this->lang->line('TO');?> <?php echo System_helper::Get_Eng_to_Bng($to_date);?>
-                    </th>
-                </tr>
+                <!--                <tr>-->
+                <!--                    <th colspan="21" class="text-center">-->
+                <!--                        --><?php //echo System_helper::Get_Eng_to_Bng($from_date);?><!-- --><?php //echo $this->lang->line('TO');?><!-- --><?php //echo System_helper::Get_Eng_to_Bng($to_date);?>
+                <!--                    </th>-->
+                <!--                </tr>-->
                 <tr>
                     <th><?php echo $this->lang->line('DIVISION_NAME');?></th>
                     <th><?php echo $this->lang->line('ZILLA_NAME');?></th>
-                    <th><?php echo $this->lang->line('MUNICIPAL_NAME');?></th>
-                    <th><?php echo $this->lang->line('MUNICIPAL_WARD_NAME');?></th>
-                    <th><?php echo $this->lang->line('UISC_NAME');?></th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                    <!--                    <th>--><?php //echo $this->lang->line('UPAZILLA_NAME');?><!--</th>-->
+                    <!--                    <th>--><?php //echo $this->lang->line('UNION_NAME');?><!--</th>-->
+                    <th><?php echo $this->lang->line('TOTAL_PDC');?></th>
+                    <th><?php echo $this->lang->line('NUMBER_OF_ENTREPRENEUR');?></th>
+                    <th><?php echo $this->lang->line('TOTAL_UPLOAD_REPORT');?></th>
+                    <th><?php echo $this->lang->line('TOTAL_INCOME');?></th>
+                    <th><?php echo $this->lang->line('TOTAL_SERVICE_HOLDER');?></th>
+                    <th><?php echo $this->lang->line('TOTAL_UPLOAD_REPORT_PERCENTAGE');?></th>
+                    <th><?php echo $this->lang->line('TOTAL_PDC_INCOME_PERCENTAGE');?></th>
+                    <th><?php echo $this->lang->line('TOTAL_PDC_SERVICE_HOLDER_PERCENTAGE');?></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -53,118 +60,215 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                     <tr>
                         <td colspan="21" style="color: red; text-align: center;"><?php echo $this->lang->line('DATA_NOT_FOUND');?></td>
                     </tr>
-                <?php
+                    <?php
                 }
                 else
                 {
+                    $pdc=[
+                        '01'=>'3',
+                        '03'=>'2',
+                        '04'=>'4',
+                        '06'=>'6',
+                        '09'=>'5',
+                        '10'=>'12',
+                        '12'=>'4',
+                        '13'=>'7',
+                        '15'=>'13',
+                        '18'=>'4',
+                        '19'=>'4',
+                        '22'=>'4',
+                        '26'=>'3',
+                        '27'=>'9',
+                        '29'=>'5',
+                        '30'=>'5',
+                        '32'=>'4',
+                        '33'=>'3',
+                        '35'=>'4',
+                        '36'=>'6',
+                        '38'=>'5',
+                        '39'=>'7',
+                        '41'=>'8',
+                        '42'=>'2',
+                        '44'=>'6',
+                        '46'=>'3',
+                        '47'=>'2',
+                        '48'=>'8',
+                        '49'=>'3',
+                        '50'=>'5',
+                        '51'=>'4',
+                        '52'=>'2',
+                        '54'=>'4',
+                        '55'=>'1',
+                        '56'=>'2',
+                        '57'=>'2',
+                        '58'=>'5',
+                        '59'=>'2',
+                        '61'=>'10',
+                        '64'=>'3',
+                        '65'=>'33',
+                        '67'=>'5',
+                        '68'=>'6',
+                        '69'=>'8',
+                        '70'=>'4',
+                        '72'=>'5',
+                        '73'=>'4',
+                        '75'=>'8',
+                        '76'=>'10',
+                        '77'=>'2',
+                        '78'=>'5',
+                        '79'=>'3',
+                        '81'=>'14',
+                        '82'=>'3',
+                        '84'=>'2',
+                        '85'=>'2',
+                        '86'=>'6',
+                        '87'=>'2',
+                        '88'=>'6',
+                        '89'=>'4',
+                        '90'=>'4',
+                        '91'=>'4',
+                        '93'=>'11',
+                        '94'=>'3',
+                    ];
                     $division_name='';
                     $zilla_name='';
-                    $municipal_name='';
+                    $upazilla_name='';
+                    $union_name='';
                     $uisc_name='';
+                    $total_pdc=0;
+                    $total_entrepreneur=0;
+                    $total_report_upload=0;
+                    $total_income=0;
+                    $total_service_holder=0;
+
+                    $total_report_upload_percentage=0;
+                    $total_income_percentage=0;
+                    $total_service_holder_percentage=0;
+
+                    $grand_total_pdc=0;
+                    $grand_total_entrepreneur=0;
+                    $grand_total_report_upload=0;
+                    $grand_total_income=0;
+                    $grand_total_service_holder=0;
+
+                    $grand_total_report_upload_percentage=0;
+                    $grand_total_income_percentage=0;
+                    $grand_total_service_holder_percentage=0;
+
                     foreach($report as $division)
                     {
                         foreach($division['zilla'] as $zilla)
                         {
-                            foreach($zilla['municipal'] as $municipal)
+
+                            $total_pdc=$zilla['total_pdc']?$zilla['total_pdc']:0;
+                            $total_entrepreneur=$zilla['total_entrepreneur']?$zilla['total_entrepreneur']:0;
+                            $total_report_upload=$zilla['total_report_upload']?$zilla['total_report_upload']:0;
+                            $total_income=$zilla['total_income']?$zilla['total_income']:0;
+                            $total_service_holder=$zilla['total_service_holder']?$zilla['total_service_holder']:0;
+
+                            if(!empty($total_pdc) && !empty($total_report_upload))
                             {
-                                ?>
-                                <tr style="background: #cccccc">
-                                    <td>
-                                        <?php
-                                        if ($division_name == '')
-                                        {
-                                            echo $division['division_name'];
-                                            $division_name = $division['division_name'];
-                                            //$currentDate = $preDate;
-                                        }
-                                        else if ($division_name == $division['division_name'])
-                                        {
-                                            //exit;
-                                            echo "&nbsp;";
-                                        }
-                                        else
-                                        {
-                                            echo $division['division_name'];
-                                            $division_name = $division['division_name'];
-                                        }
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <?php
-                                        if ($zilla_name == '')
-                                        {
-                                            echo $zilla['zilla_name'];
-                                            $zilla_name = $zilla['zilla_name'];
-                                            //$currentDate = $preDate;
-                                        }
-                                        else if ($zilla_name == $zilla['zilla_name'])
-                                        {
-                                            //exit;
-                                            echo "&nbsp;";
-                                        }
-                                        else
-                                        {
-                                            echo $zilla['zilla_name'];
-                                            $zilla_name = $zilla['zilla_name'];
-                                        }
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <?php
-                                        if ($municipal_name == '')
-                                        {
-                                            echo $municipal['municipal_name'];
-                                            $municipal_name = $municipal['municipal_name'];
-                                            //$currentDate = $preDate;
-                                        }
-                                        else if ($municipal_name == $municipal['municipal_name'])
-                                        {
-                                            //exit;
-                                            echo "&nbsp;";
-                                        }
-                                        else
-                                        {
-                                            echo $municipal['municipal_name'];
-                                            $municipal_name = $municipal['municipal_name'];
-                                        }
-                                        ?>
-                                    </td>
-                                    <td><?php echo System_helper::Get_Eng_to_Bng($municipal['number_of_municipal']);?></td>
-                                    <td><?php echo System_helper::Get_Eng_to_Bng($municipal['number_of_uisc']);?></td>
-                                    <th><?php if(isset($upazilla['invoice'])){echo $this->lang->line('DATE');}?></th>
-                                    <th><?php if(isset($upazilla['invoice'])){echo $this->lang->line('INCOME');}?></th>
-                                </tr>
-
-                                <?php
-                                $invoice_date='';
-                                $invoice_amount='';
-                                if(isset($municipal['invoice']))
-                                {
-                                    for($i=0; $i<sizeof($municipal['invoice']); $i++)
-                                    {
-                                        if(isset($municipal['invoice'][$i]['invoice_date']))
-                                        {
-                                            $invoice_date = strtotime($municipal['invoice'][$i]['invoice_date']);
-                                            $invoice_amount = $municipal['invoice'][$i]['invoice_amount'];
-                                        }
-                                        else
-                                        {
-                                            $invoice_date='';
-                                            $invoice_amount='';
-                                        }
-                                        ?>
-                                        <tr>
-                                            <td colspan="5">&nbsp;</td>
-                                            <td><?php echo System_helper::Get_Eng_to_Bng(date('d-m-Y', $invoice_date));?></td>
-                                            <td><?php echo System_helper::Get_Eng_to_Bng($invoice_amount);?></td>
-                                        </tr>
-                                    <?php
-                                    }
-                                }
-
+                                $total_report_upload_percentage=($total_report_upload/$total_pdc);
                             }
+                            else
+                            {
+                                $total_report_upload_percentage=0;
+                            }
+
+                            if(!empty($total_pdc) && !empty($total_income))
+                            {
+                                $total_income_percentage=($total_income/$total_pdc);
+                            }
+                            else
+                            {
+                                $total_income_percentage=0;
+                            }
+
+                            if(!empty($total_pdc) && !empty($total_service_holder))
+                            {
+                                $total_service_holder_percentage=($total_service_holder/$total_pdc);
+                            }
+                            else
+                            {
+                                $total_service_holder_percentage=0;
+                            }
+
+                            $grand_total_pdc+=$total_pdc;
+                            $grand_total_entrepreneur+=$total_entrepreneur;
+                            $grand_total_report_upload+=$total_report_upload;
+                            $grand_total_income+=$total_income;
+                            $grand_total_service_holder+=$total_service_holder;
+
+                            $grand_total_report_upload_percentage+=$total_report_upload_percentage;
+                            $grand_total_income_percentage+=$total_income_percentage;
+                            $grand_total_service_holder_percentage+=$total_service_holder_percentage;
+                            ?>
+                            <tr style="background: #cccccc">
+                                <td>
+                                    <?php
+                                    if ($division_name == '')
+                                    {
+                                        echo $division['division_name'];
+                                        $division_name = $division['division_name'];
+                                        //$currentDate = $preDate;
+                                    }
+                                    else if ($division_name == $division['division_name'])
+                                    {
+                                        //exit;
+                                        echo "&nbsp;";
+                                    }
+                                    else
+                                    {
+                                        echo $division['division_name'];
+                                        $division_name = $division['division_name'];
+                                    }
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    if ($zilla_name == '')
+                                    {
+                                        echo $zilla['zilla_name'];
+                                        $zilla_name = $zilla['zilla_name'];
+                                        //$currentDate = $preDate;
+                                    }
+                                    else if ($zilla_name == $zilla['zilla_name'])
+                                    {
+                                        //exit;
+                                        echo "&nbsp;";
+                                    }
+                                    else
+                                    {
+                                        echo $zilla['zilla_name'];
+                                        $zilla_name = $zilla['zilla_name'];
+                                    }
+                                    ?>
+                                </td>
+
+
+                                <td><?php echo System_helper::Get_Eng_to_Bng($pdc[$zilla['zilla_id']]);?></td>
+                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_entrepreneur,0));?></td>
+                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_report_upload,0));?></td>
+                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_income,0));?></td>
+                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_service_holder,0));?></td>
+                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_report_upload_percentage,0));?></td>
+                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_income_percentage,0));?></td>
+                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_service_holder_percentage,0));?></td>
+                            </tr>
+                            <?php
                         }
                     }
+                    ?>
+                    <th colspan="2" style="text-align: right"><?php echo $this->lang->line('TOTAL');?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_pdc,0));?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_entrepreneur,0));?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_report_upload,0));?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_income,0));?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_service_holder,0));?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_report_upload_percentage,0));?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_income_percentage,0));?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_service_holder_percentage,0));?></th>
+                    <?php
                 }
                 ?>
                 </tbody>

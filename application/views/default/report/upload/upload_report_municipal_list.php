@@ -4,7 +4,7 @@ $user=User_helper::get_user();
 ?>
 <div class="row show-grid " id="division_option">
     <div class="col-xs-4">
-        <label class="control-label pull-right"><?php echo $CI->lang->line('DIVISION_NAME'); ?></label>
+        <label class="control-label pull-right"><?php echo $CI->lang->line('DIVISION_NAME'); ?><span style="color:#FF0000">*</span></label>
     </div>
     <div class="col-sm-4 col-xs-8">
         <select name="division" id="user_division_id" class="form-control">
@@ -16,7 +16,7 @@ $user=User_helper::get_user();
 </div>
 <div style="display: <?php echo $display_zillas?'block':'none'; ?>" class="row show-grid " id="zilla_option">
     <div class="col-xs-4">
-        <label class="control-label pull-right"><?php echo $CI->lang->line('DISTRICT_NAME'); ?></label>
+        <label class="control-label pull-right"><?php echo $CI->lang->line('DISTRICT_NAME'); ?><span style="color:#FF0000">*</span></label>
     </div>
     <div class="col-sm-4 col-xs-8">
         <select name="zilla" id="user_zilla_id" class="form-control">
@@ -26,30 +26,30 @@ $user=User_helper::get_user();
         </select>
     </div>
 </div>
-<div style="display: <?php echo $display_municipal?'block':'none'; ?>" class="row show-grid " id="municipal_option">
+<!--<div style="display: <?php /*echo $display_municipal?'block':'none'; */?>" class="row show-grid " id="municipal_option">
     <div class="col-xs-4">
-        <label class="control-label pull-right"><?php echo $CI->lang->line('MUNICIPAL_NAME'); ?></label>
+        <label class="control-label pull-right"><?php /*echo $CI->lang->line('MUNICIPAL_NAME'); */?></label>
     </div>
     <div class="col-sm-4 col-xs-8">
         <select name="municipal" id="user_municipal_id" class="form-control">
             <?php
-            $CI->load_view('dropdown',array('drop_down_options'=>$municipals,'drop_down_default_option'=>$default_upazilas));
-            ?>
+/*            $CI->load_view('dropdown',array('drop_down_options'=>$municipals,'drop_down_default_option'=>$default_upazilas));
+            */?>
         </select>
     </div>
 </div>
-<div style="display: <?php echo $display_municipal_ward?'block':'none'; ?>" class="row show-grid " id="municipal_ward_option">
+<div style="display: <?php /*echo $display_municipal_ward?'block':'none'; */?>" class="row show-grid " id="municipal_ward_option">
     <div class="col-xs-4">
-        <label class="control-label pull-right"><?php echo $CI->lang->line('MUNICIPAL_WARD_NAME'); ?></label>
+        <label class="control-label pull-right"><?php /*echo $CI->lang->line('MUNICIPAL_WARD_NAME'); */?></label>
     </div>
     <div class="col-sm-4 col-xs-8">
         <select name="municipal_ward" id="user_municipal_ward_id" class="form-control">
             <?php
-            $CI->load_view('dropdown',array('drop_down_options'=>$unions,'drop_down_default_option'=>$default_unions));
-            ?>
+/*            $CI->load_view('dropdown',array('drop_down_options'=>$unions,'drop_down_default_option'=>$default_unions));
+            */?>
         </select>
     </div>
-</div>
+</div>-->
 <script type="text/javascript">
     $(document).ready(function ()
     {
@@ -89,7 +89,7 @@ $user=User_helper::get_user();
 
             }
         });
-        $(document).on("change","#user_zilla_id",function()
+        /*$(document).on("change","#user_zilla_id",function()
         {
             $("#municipal_ward_option").hide();
             $("#municipal_option").show();
@@ -151,6 +151,6 @@ $user=User_helper::get_user();
             {
                 $("#municipal_ward_option").hide();
             }
-        });
+        });*/
     });
 </script>

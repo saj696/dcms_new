@@ -56,6 +56,7 @@ class Profile_update_status_report_model extends CI_Model
 
         /* $CI->db->order_by('user.zilla');*/
         if ($inputs['report_type'] == 1) {
+            $CI->db->where('user.uisc_type =1');
             $CI->db->select('tu.upazilaname upazila');
             $CI->db->select('unioun.unionname unioun');
             if(!empty($inputs['upazila']))
@@ -79,6 +80,7 @@ class Profile_update_status_report_model extends CI_Model
             $CI->db->order_by('user.upazila', 'ASC');
             $CI->db->order_by('user.unioun', 'ASC');
         } elseif ($inputs['report_type'] == 2) {
+            $CI->db->where('user.uisc_type =2');
             $CI->db->select('tcc.citycorporationname citycorporation');
             $CI->db->select('tccw.wardname citycorporationward');
 
@@ -102,6 +104,7 @@ class Profile_update_status_report_model extends CI_Model
             $CI->db->order_by('user.citycorporation');
             $CI->db->order_by('tccw.citycorporationwardid', 'ASC');
         } elseif ($inputs['report_type'] == 3) {
+            $CI->db->where('user.uisc_type =3');
 
             $CI->db->select('municipal_ward.wardname municipalward');
             $CI->db->select('municipal.municipalname municipal');

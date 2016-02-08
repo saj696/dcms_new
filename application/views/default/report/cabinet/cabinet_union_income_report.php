@@ -29,6 +29,7 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                 <h5><?php echo $title;?></h5>
             </div>
 
+            <p style="margin:15px 0px;text-align: center"><?= System_helper::Get_Eng_to_Bng($from_date).' '.$this->lang->line('FROM_DATE') ?> &nbsp;&nbsp;<?= System_helper::Get_Eng_to_Bng($to_date).' '.$this->lang->line('TO_DATE') ?></p>
             <table class="table table-responsive table-bordered">
                 <thead>
                 <!--                <tr>-->
@@ -63,6 +64,72 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                 }
                 else
                 {
+                    $udc=[
+                        '01'=>'75',
+                        '03'=>'31',
+                        '04'=>'42',
+                        '06'=>'85',
+                        '09'=>'68',
+                        '10'=>'108',
+                        '12'=>'100',
+                        '13'=>'88',
+                        '15'=>'194',
+                        '18'=>'33',
+                        '19'=>'185',
+                        '22'=>'71',
+                        '26'=>'79',
+                        '27'=>'102',
+                        '29'=>'79',
+                        '30'=>'43',
+                        '32'=>'82',
+                        '33'=>'39',
+                        '35'=>'68',
+                        '36'=>'77',
+                        '38'=>'32',
+                        '39'=>'68',
+                        '41'=>'91',
+                        '42'=>'32',
+                        '44'=>'67',
+                        '46'=>'38',
+                        '47'=>'68',
+                        '48'=>'108',
+                        '49'=>'72',
+                        '50'=>'67',
+                        '51'=>'58',
+                        '52'=>'45',
+                        '54'=>'59',
+                        '55'=>'36',
+                        '56'=>'65',
+                        '57'=>'18',
+                        '58'=>'67',
+                        '59'=>'67',
+                        '61'=>'146',
+                        '64'=>'99',
+                        '65'=>'39',
+                        '67'=>'41',
+                        '68'=>'71',
+                        '69'=>'52',
+                        '70'=>'45',
+                        '72'=>'86',
+                        '73'=>'60',
+                        '75'=>'91',
+                        '76'=>'73',
+                        '77'=>'43',
+                        '78'=>'72',
+                        '79'=>'52',
+                        '81'=>'71',
+                        '82'=>'42',
+                        '84'=>'49',
+                        '85'=>'76',
+                        '86'=>'65',
+                        '87'=>'78',
+                        '88'=>'83',
+                        '89'=>'52',
+                        '90'=>'87',
+                        '91'=>'103',
+                        '93'=>'110',
+                        '94'=>'53',
+                    ];
                     $division_name='';
                     $zilla_name='';
                     $upazilla_name='';
@@ -179,28 +246,28 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                                 </td>
 
 
-                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_udc,2));?></td>
-                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_entrepreneur,2));?></td>
-                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_report_upload,2));?></td>
-                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_income,2));?></td>
-                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_service_holder,2));?></td>
-                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_report_upload_percentage,2));?></td>
-                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_income_percentage,2));?></td>
-                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_service_holder_percentage,2));?></td>
+                                <td><?php echo System_helper::Get_Eng_to_Bng($udc[$zilla['zilla_id']]);?></td>
+                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_entrepreneur,0));?></td>
+                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_report_upload,0));?></td>
+                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_income,0));?></td>
+                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_service_holder,0));?></td>
+                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_report_upload_percentage,0));?></td>
+                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_income_percentage,0));?></td>
+                                <td><?php echo System_helper::Get_Eng_to_Bng(number_format($total_service_holder_percentage,0));?></td>
                             </tr>
                         <?php
                         }
                     }
                     ?>
                     <th colspan="2" style="text-align: right"><?php echo $this->lang->line('TOTAL');?></th>
-                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_udc,2));?></th>
-                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_entrepreneur,2));?></th>
-                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_report_upload,2));?></th>
-                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_income,2));?></th>
-                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_service_holder,2));?></th>
-                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_report_upload_percentage,2));?></th>
-                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_income_percentage,2));?></th>
-                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_service_holder_percentage,2));?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_udc,0));?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_entrepreneur,0));?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_report_upload,0));?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_income,0));?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_service_holder,0));?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_report_upload_percentage,0));?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_income_percentage,0));?></th>
+                    <th><?php echo System_helper::Get_Eng_to_Bng(number_format($grand_total_service_holder_percentage,0));?></th>
                 <?php
                 }
                 ?>

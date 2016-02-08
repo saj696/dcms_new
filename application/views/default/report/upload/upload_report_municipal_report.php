@@ -1,428 +1,203 @@
 <?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-$pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['REQUEST_URI']);
-//echo "<pre>";
-//print_r($report);
-//echo "</pre>";
-
+$pdf_link = "http://" . $_SERVER['HTTP_HOST'] . str_replace("/list", "/pdf", $_SERVER['REQUEST_URI']);
+$numDays = 0;
 ?>
+
+<?php
+if (!empty($report)) {
+     /*echo "<pre>";
+    print_r($report);
+    echo "</pre>";
+    die;*/
+    $count_ward = array();
+    $report_data = array();
+    $wardid = 0;
+    if($report_status=='100')
+    {
+        foreach($report as $row)
+        {
+            $start_date = date('Y-m-d', strtotime($from_date));
+            $end_date =  date('Y-m-d', strtotime($to_date));
+            $day = 86400; // Day in seconds
+            $format = 'Y-m-d'; // Output format (see PHP date funciton)
+            $format_month = 'm'; // Output format (see PHP date funciton)
+            $sTime = strtotime($start_date); // Start as time
+            $eTime = strtotime($end_date); // End as time
+            $numDays = round(($eTime - $sTime) / $day) + 1;
+            $days = array();
+            $date='';
+            $date_month='';
+            $upload_yes='';
+            $upload_no='';
+
+            if ($row['municipalward'] != $wardid) {
+                $count_ward[$row['municipalward']][] = $row['municipalward'];
+                $municipal_wardid = $row['municipalward'];
+            }
+
+            for ($d = 0; $d < $numDays; $d++)
+            {
+                $date= date($format, ($sTime + ($d * $day)));
+                $date_month= date($format_month, ($sTime + ($d * $day)));
+
+                $report_data[$row['divid']]['division_id']=$row['divid'];
+                $report_data[$row['divid']]['division_name']=$row['divname'];
+                $report_data[$row['divid']]['zilla'][$row['zillaid']]['zilla_id']=$row['zillaid'];
+                $report_data[$row['divid']]['zilla'][$row['zillaid']]['zilla_name']=$row['zillaname'];
+                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_id']=$row['municipal'];
+                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_name']=$row['municipalname'];
+                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['municipal_ward_id']=$row['municipalward'];
+                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['municipal_ward_name']=$row['wardname'];
+                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['uisc_id']=$row['uisc_id'];
+                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['uisc_name']=$row['uisc_name'];
+                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['invoice'][$date]['invoice_date'][]=$row['invoice_date'];
+                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['invoice'][$date]['increment_date']=$date;
+                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['invoice'][$date]['invoice_month']=$date_month;
+                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['invoice'][$date]['upload_yes']=$upload_yes;
+                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['invoice'][$date]['upload_no']=$upload_no;
+            }
+        }
+    }
+    else
+    {
+        foreach($report as $row)
+        {
+            $start_date = date('Y-m-d', strtotime($from_date));
+            $end_date =  date('Y-m-d', strtotime($to_date));
+            $day = 86400; // Day in seconds
+            $format = 'Y-m-d'; // Output format (see PHP date funciton)
+            $format_month = 'm'; // Output format (see PHP date funciton)
+            $sTime = strtotime($start_date); // Start as time
+            $eTime = strtotime($end_date); // End as time
+            $numDays = round(($eTime - $sTime) / $day) + 1;
+            $days = array();
+            $date='';
+            $date_month='';
+            $upload_yes='';
+            $upload_no='';
+
+
+            $report_data[$row['divid']]['division_id']=$row['divid'];
+            $report_data[$row['divid']]['division_name']=$row['divname'];
+            $report_data[$row['divid']]['zilla'][$row['zillaid']]['zilla_id']=$row['zillaid'];
+            $report_data[$row['divid']]['zilla'][$row['zillaid']]['zilla_name']=$row['zillaname'];
+            $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_id']=$row['municipal'];
+            $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_name']=$row['municipalname'];
+            $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['municipal_ward_id']=$row['municipalward'];
+            $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['municipal_ward_name']=$row['wardname'];
+            $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['uisc_id']=$row['uisc_id'];
+            $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['uisc_name']=$row['uisc_name'];
+            $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['invoice'][]=$row['invoice_date'];
+        }
+    }
+} ?>
 <html lang="en">
 <head>
-    <title><?php echo $title;?></title>
+    <title><?php echo $title; ?></title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/templates/default/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container">
-        <div class="main_container">
-            <div class="row show-grid hidden-print">
-                <a class="btn btn-primary btn-rect pull-right" href="<?php echo $pdf_link;?>"><?php echo $this->lang->line("BUTTON_PDF"); ?></a>
-                <a class="btn btn-primary btn-rect pull-right" style="margin-right: 10px;" href="javascript:window.print();"><?php echo $this->lang->line("BUTTON_PRINT"); ?></a>
-                <div class="clearfix"></div>
-                <span class="pull-right"><?php echo $this->lang->line('REPORT_CURRENT_DATE_VIEW');?></span>
-            </div>
-            <div class="col-lg-12">
-                <div class="col-lg-12 text-center">
-                    <h4><?php echo $this->lang->line('REPORT_HEADER_TITLE');?></h4>
-                    <h5><?php echo $title;?></h5>
-                </div>
+<div class="container">
+    <div class="main_container">
+        <div class="row show-grid hidden-print">
+            <a class="btn btn-primary btn-rect pull-right"
+               href="<?php echo $pdf_link; ?>"><?php echo $this->lang->line("BUTTON_PDF"); ?></a>
+            <a class="btn btn-primary btn-rect pull-right" style="margin-right: 10px;"
+               href="javascript:window.print();"><?php echo $this->lang->line("BUTTON_PRINT"); ?></a>
+            <div class="clearfix"></div>
+            <span class="pull-right"><?php echo $this->lang->line('REPORT_CURRENT_DATE_VIEW'); ?></span>
+        </div>
+        <div class="col-lg-12">
 
-                <table class="table table-responsive table-bordered">
+            <table class="table table-responsive table-bordered">
+                <?php
+                if (!empty($report)){
+                ?>
                 <thead>
+                <?php if (empty($zilla)) { ?>
+                    <tr>
+                        <th colspan="<?= $numDays + 4 ?>" class="text-center">
+                            <?= $report[0]['divname'] . $this->lang->line('DIVISION') ?> <br/>
+                            <?= $this->config->item('month')[$month] . '-' . System_helper::Get_Eng_to_Bng($year) ?>
+                            <br/>
+                            <?= $this->lang->line('TOTAL_ZILLA') . System_helper::Get_Eng_to_Bng($total['total_zilla']) . ', ' . $this->lang->line('TOTAL_MUNICIPAL') . System_helper::Get_Eng_to_Bng($total['total_municipal']) ?>
+                            <br/>
+                        </th>
+                    </tr>
+                <?php } ?>
+                <?php
+                foreach ($report_data as $division) {
+                foreach ($division['zilla'] as $zilla) {
+                foreach ($zilla['municipal'] as $municipal) { ?>
                 <tr>
-                    <th colspan="21" class="text-center">
-                        <?php echo System_helper::Get_Eng_to_Bng($from_date);?> <?php echo $this->lang->line('TO');?> <?php echo System_helper::Get_Eng_to_Bng($to_date);?>
+                    <th colspan="<?= $numDays + 4 ?>" class="text-center">
+                        <?php echo $municipal['municipal_name'] ?> <br>
+                        <?= !isset($upazilas) ? $this->config->item('month')[$month] . '-' . System_helper::Get_Eng_to_Bng($year) . "<br/>" : "" ?>
+                        <?= $this->lang->line('TOTAL_WARD') . ' ' . System_helper::Get_Eng_to_Bng(count(Query_helper::get_info($this->config->item('table_municipal_wards'), 'rowid', array('zillaid =' . $zilla['zilla_id'], 'municipalid =' . $municipal['municipal_id'])))) ?>
                     </th>
                 </tr>
                 <tr>
-
-                    <th><?php echo $this->lang->line('DIVISION_NAME');?></th>
-                    <th><?php echo $this->lang->line('ZILLA_NAME');?></th>
-                    <th><?php echo $this->lang->line('MUNICIPAL_NAME');?></th>
-                    <th><?php echo $this->lang->line('MUNICIPAL_WARD_NAME');?></th>
-                    <th><?php echo $this->lang->line('UISC_NAME');?></th>
-                    <!--   <th>--><?php //echo $this->lang->line('MONTH_NAME');?><!--</th>-->
-                    <?php
-                    if($report_status=='100')
-                    {
-                        ?>
-                        <th><?php echo $this->lang->line('DATE');?></th>
-                        <th><?php echo $this->lang->line('CENTER_STATUS');?></th>
-                    <?php
-                    }
-                    ?>
+                    <th><?= $this->lang->line('WARD') ?></th>
+                    <th><?= $this->lang->line('CENTER') ?></th>
+                    <?php for ($d = 1; $d <= $numDays; $d++) { ?>
+                        <th><?php echo System_helper::Get_Eng_to_Bng($d); ?></th>
+                    <?php } ?>
+                    <th><?= $this->lang->line('NUMBER_OF_UPLOAD') ?></th>
+                    <th><?= $this->lang->line('REMARKS') ?></th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php
-                if(empty($report))
-                {
-                    ?>
-                    <tr>
-                        <td colspan="21" style="color: red; text-align: center;"><?php echo $this->lang->line('DATA_NOT_FOUND');?></td>
-                    </tr>
-                <?php
+                <?php foreach ($municipal['municipal_ward'] as $municipal_ward) {
+                    $center_no = 01;
+                    $total_uplaod = 0;
+                    foreach ($municipal_ward['uisc'] as $center) {
+                        ?>
+                        <tr>
+                            <td><?= $municipal_ward['municipal_ward_name']; ?></td>
+                            <td><?= System_helper::Get_Eng_to_Bng($center_no++); ?></td>
+                            <?php foreach ($center['invoice'] as $invoice) {
+
+                            $upload_yes = '';
+                            $upload_no = '';
+                            if (in_array($invoice['increment_date'], $invoice['invoice_date'])) {
+                                $total_uplaod++; ?>
+                                <td><span style="color: #008800" class="glyphicon glyphicon-ok"></span>
+
+                                </td>
+                            <?php } else { ?>
+                            <td><span style="color: #dd1144" class="glyphicon glyphicon-remove"></span>
+                                <?php } ?>
+                                <?php } ?>
+                            <td><?= System_helper::Get_Eng_to_Bng($total_uplaod) ?></td>
+                            <?php
+                            $upload_percent = (($total_uplaod * 100) / $numDays);
+                            if ($upload_percent >= 70) { ?>
+                                <td><?= $this->lang->line('SATISFIED') ?></td>
+                            <?php } elseif ($upload_percent >= 50 && $upload_percent < 70) { ?>
+                                <td><?= $this->lang->line('FAIRLY_SATISFIED') ?></td>
+                            <?php } elseif ($upload_percent > 0 && $upload_percent < 50) { ?>
+                                <td><?= $this->lang->line('NOT_SATISFIED') ?></td>
+                            <?php } else { ?>
+                                <td><?= $this->lang->line('UNSATISFIED') ?></td>
+                            <?php } ?>
+                        </tr>
+                    <?php }
+                } ?>
+
+                <?php }
                 }
-                else
-                {
-                    $report_data=array();
-                    if($report_status=='100')
-                    {
-                        foreach($report as $row)
-                        {
-                            $start_date = date('Y-m-d', strtotime($from_date));
-                            $end_date =  date('Y-m-d', strtotime($to_date));
-                            $day = 86400; // Day in seconds
-                            $format = 'Y-m-d'; // Output format (see PHP date funciton)
-                            $format_month = 'm'; // Output format (see PHP date funciton)
-                            $sTime = strtotime($start_date); // Start as time
-                            $eTime = strtotime($end_date); // End as time
-                            $numDays = round(($eTime - $sTime) / $day) + 1;
-                            $days = array();
-                            $date='';
-                            $date_month='';
-                            $upload_yes='';
-                            $upload_no='';
-                            for ($d = 0; $d < $numDays; $d++)
-                            {
-                                $date= date($format, ($sTime + ($d * $day)));
-                                $date_month= date($format_month, ($sTime + ($d * $day)));
-
-                                $report_data[$row['divid']]['division_id']=$row['divid'];
-                                $report_data[$row['divid']]['division_name']=$row['divname'];
-                                $report_data[$row['divid']]['zilla'][$row['zillaid']]['zilla_id']=$row['zillaid'];
-                                $report_data[$row['divid']]['zilla'][$row['zillaid']]['zilla_name']=$row['zillaname'];
-                                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_id']=$row['municipal'];
-                                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_name']=$row['municipalname'];
-                                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['municipal_ward_id']=$row['municipalward'];
-                                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['municipal_ward_name']=$row['wardname'];
-                                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['uisc_id']=$row['uisc_id'];
-                                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['uisc_name']=$row['uisc_name'];
-                                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['invoice'][$date]['invoice_date'][]=$row['invoice_date'];
-                                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['invoice'][$date]['increment_date']=$date;
-                                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['invoice'][$date]['invoice_month']=$date_month;
-                                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['invoice'][$date]['upload_yes']=$upload_yes;
-                                $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['invoice'][$date]['upload_no']=$upload_no;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach($report as $row)
-                        {
-                            $start_date = date('Y-m-d', strtotime($from_date));
-                            $end_date =  date('Y-m-d', strtotime($to_date));
-                            $day = 86400; // Day in seconds
-                            $format = 'Y-m-d'; // Output format (see PHP date funciton)
-                            $format_month = 'm'; // Output format (see PHP date funciton)
-                            $sTime = strtotime($start_date); // Start as time
-                            $eTime = strtotime($end_date); // End as time
-                            $numDays = round(($eTime - $sTime) / $day) + 1;
-                            $days = array();
-                            $date='';
-                            $date_month='';
-                            $upload_yes='';
-                            $upload_no='';
-
-
-                            $report_data[$row['divid']]['division_id']=$row['divid'];
-                            $report_data[$row['divid']]['division_name']=$row['divname'];
-                            $report_data[$row['divid']]['zilla'][$row['zillaid']]['zilla_id']=$row['zillaid'];
-                            $report_data[$row['divid']]['zilla'][$row['zillaid']]['zilla_name']=$row['zillaname'];
-                            $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_id']=$row['municipal'];
-                            $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_name']=$row['municipalname'];
-                            $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['municipal_ward_id']=$row['municipalward'];
-                            $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['municipal_ward_name']=$row['wardname'];
-                            $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['uisc_id']=$row['uisc_id'];
-                            $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['uisc_name']=$row['uisc_name'];
-                            $report_data[$row['divid']]['zilla'][$row['zillaid']]['municipal'][$row['municipal']]['municipal_ward'][$row['municipalward']]['uisc'][$row['uisc_id']]['invoice'][]=$row['invoice_date'];
-                        }
-                    }
-
-                    $division_name='';
-                    $zilla_name='';
-                    $municipal_name='';
-                    $municipal_ward_name='';
-                    $uisc_name='';
-                    foreach($report_data as $division)
-                    {
-                        //echo $division['division_name'];
-                        foreach($division['zilla'] as $zilla)
-                        {
-                            foreach($zilla['municipal'] as $municipal)
-                            {
-                                foreach($municipal['municipal_ward'] as $municipal_ward)
-                                {
-                                    foreach($municipal_ward['uisc'] as $uisc)
-                                    {
-                                        if($report_status=='100')
-                                        {
-                                            foreach($uisc['invoice'] as $invoice)
-                                            {
-                                                if($report_status=='100')
-                                                {
-                                                    $upload_yes='';
-                                                    $upload_no='';
-                                                    if (in_array($invoice['increment_date'], $invoice['invoice_date']))
-                                                    {
-                                                        $upload_yes="<span style='color: green'>".$this->lang->line('UPLOAD_YES')."</div>";
-                                                    }
-                                                    else
-                                                    {
-                                                        $upload_no="<span style='color: red'>".$this->lang->line('UPLOAD_NO')."</div>";
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    $upload_yes='';
-                                                    $upload_no='';
-                                                }
-
-                                                ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php
-                                                        if ($division_name == '')
-                                                        {
-                                                            echo $division['division_name'];
-                                                            $division_name = $division['division_name'];
-                                                            //$currentDate = $preDate;
-                                                        }
-                                                        else if ($division_name == $division['division_name'])
-                                                        {
-                                                            //exit;
-                                                            echo "&nbsp;";
-                                                        }
-                                                        else
-                                                        {
-                                                            echo $division['division_name'];
-                                                            $division_name = $division['division_name'];
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        if ($zilla_name == '')
-                                                        {
-                                                            echo $zilla['zilla_name'];
-                                                            $zilla_name = $zilla['zilla_name'];
-                                                            //$currentDate = $preDate;
-                                                        }
-                                                        else if ($zilla_name == $zilla['zilla_name'])
-                                                        {
-                                                            //exit;
-                                                            echo "&nbsp;";
-                                                        }
-                                                        else
-                                                        {
-                                                            echo $zilla['zilla_name'];
-                                                            $zilla_name = $zilla['zilla_name'];
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        if ($municipal_name == '')
-                                                        {
-                                                            echo $municipal['municipal_name'];
-                                                            $municipal_name = $municipal['municipal_name'];
-                                                            //$currentDate = $preDate;
-                                                        }
-                                                        else if ($municipal_name == $municipal['municipal_name'])
-                                                        {
-                                                            //exit;
-                                                            echo "&nbsp;";
-                                                        }
-                                                        else
-                                                        {
-                                                            echo $municipal['municipal_name'];
-                                                            $municipal_name = $municipal['municipal_name'];
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        if ($municipal_ward_name == '')
-                                                        {
-                                                            echo $municipal_ward['municipal_ward_name'];
-                                                            $municipal_ward_name = $municipal_ward['municipal_ward_name'];
-                                                            //$currentDate = $preDate;
-                                                        }
-                                                        else if ($municipal_ward_name == $municipal_ward['municipal_ward_name'])
-                                                        {
-                                                            //exit;
-                                                            echo "&nbsp;";
-                                                        }
-                                                        else
-                                                        {
-                                                            echo $municipal_ward['municipal_ward_name'];
-                                                            $municipal_ward_name = $municipal_ward['municipal_ward_name'];
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        if ($uisc_name == '')
-                                                        {
-                                                            echo $uisc['uisc_name'];
-                                                            $uisc_name = $uisc['uisc_name'];
-                                                            //$currentDate = $preDate;
-                                                        }
-                                                        else if ($uisc_name == $uisc['uisc_name'])
-                                                        {
-                                                            //exit;
-                                                            echo "&nbsp;";
-                                                        }
-                                                        else
-                                                        {
-                                                            echo $uisc['uisc_name'];
-                                                            $uisc_name = $uisc['uisc_name'];
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <!--<td>--><?php //echo System_helper::Get_Bangla_Month($invoice['invoice_month']);?><!--</td>-->
-                                                    <?php
-                                                    if($report_status=='100')
-                                                    {
-                                                        ?>
-                                                        <td><?php echo System_helper::Get_Eng_to_Bng($invoice['increment_date']);?></td>
-                                                    <?php
-                                                    }
-                                                    ?>
-
-                                                    <td><?php echo $upload_yes;?><?php echo $upload_no;?></td>
-                                                </tr>
-                                            <?php
-                                            }
-                                        }
-                                        else
-                                        {
-                                            $total_days = $numDays;
-                                            $result_days=count($uisc['invoice']);
-                                            $date_between_percentage =  (($report_status/100)*$total_days);
-                                            if($date_between_percentage<=$result_days)
-                                            {
-                                                //$upload_yes="<span style='color: green'>".$this->lang->line('UPLOAD_YES')."</div>";
-                                                ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php
-                                                        if ($division_name == '')
-                                                        {
-                                                            echo $division['division_name'];
-                                                            $division_name = $division['division_name'];
-                                                            //$currentDate = $preDate;
-                                                        }
-                                                        else if ($division_name == $division['division_name'])
-                                                        {
-                                                            //exit;
-                                                            echo "&nbsp;";
-                                                        }
-                                                        else
-                                                        {
-                                                            echo $division['division_name'];
-                                                            $division_name = $division['division_name'];
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        if ($zilla_name == '')
-                                                        {
-                                                            echo $zilla['zilla_name'];
-                                                            $zilla_name = $zilla['zilla_name'];
-                                                            //$currentDate = $preDate;
-                                                        }
-                                                        else if ($zilla_name == $zilla['zilla_name'])
-                                                        {
-                                                            //exit;
-                                                            echo "&nbsp;";
-                                                        }
-                                                        else
-                                                        {
-                                                            echo $zilla['zilla_name'];
-                                                            $zilla_name = $zilla['zilla_name'];
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        if ($upazilla_name == '')
-                                                        {
-                                                            echo $upazilla['upazilla_name'];
-                                                            $upazilla_name = $upazilla['upazilla_name'];
-                                                            //$currentDate = $preDate;
-                                                        }
-                                                        else if ($upazilla_name == $upazilla['upazilla_name'])
-                                                        {
-                                                            //exit;
-                                                            echo "&nbsp;";
-                                                        }
-                                                        else
-                                                        {
-                                                            echo $upazilla['upazilla_name'];
-                                                            $upazilla_name = $upazilla['upazilla_name'];
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        if ($union_name == '')
-                                                        {
-                                                            echo $union['union_name'];
-                                                            $union_name = $union['union_name'];
-                                                            //$currentDate = $preDate;
-                                                        }
-                                                        else if ($union_name == $union['union_name'])
-                                                        {
-                                                            //exit;
-                                                            echo "&nbsp;";
-                                                        }
-                                                        else
-                                                        {
-                                                            echo $union['union_name'];
-                                                            $union_name = $union['union_name'];
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        if ($uisc_name == '')
-                                                        {
-                                                            echo $uisc['uisc_name'];
-                                                            $uisc_name = $uisc['uisc_name'];
-                                                            //$currentDate = $preDate;
-                                                        }
-                                                        else if ($uisc_name == $uisc['uisc_name'])
-                                                        {
-                                                            //exit;
-                                                            echo "&nbsp;";
-                                                        }
-                                                        else
-                                                        {
-                                                            echo $uisc['uisc_name'];
-                                                            $uisc_name = $uisc['uisc_name'];
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <!--<td>--><?php //echo System_helper::Get_Bangla_Month($invoice['invoice_month']);?><!--</td>-->
-                                                    <!--  <td>--><?php //echo $upload_yes;?><!----><?php //echo $upload_no;?><!--</td>-->
-                                                </tr>
-                                            <?php
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                ?>
+                } ?>
+                <?php } else { ?>
+                    <td colspan="<?= $numDays + 4 ?>"
+                        style="color: red; text-align: center;"><?php echo $this->lang->line('DATA_NOT_FOUND'); ?></td>
+                <?php } ?>
                 </tbody>
-                </table>
-            </div>
+            </table>
         </div>
     </div>
+</div>
 </body>
 </html>

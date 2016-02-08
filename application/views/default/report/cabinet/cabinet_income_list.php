@@ -23,28 +23,28 @@ $user=User_helper::get_user();
                     <div class="clearfix"></div>
                 </div>
 
-                <!--                <div class="row show-grid ">-->
-                <!--                    <div class="col-xs-4">-->
-                <!--                        <label class="control-label pull-right">--><?php //echo $CI->lang->line('DIGITAL_CENTER'); ?><!--<span style="color:#FF0000">*</span></label>-->
-                <!--                    </div>-->
-                <!--                    <div class="col-sm-4 col-xs-8">-->
-                <!--                        <select name="report_type" id="report_type" class="form-control">-->
-                <!--                            --><?php
-                //                            $report_type=array
-                //                            (
-                //                                array("value"=>$this->config->item('ONLINE_UNION_GROUP_ID'), "text"=>$this->lang->line('UDC')),
-                //                                //array("value"=>$this->config->item('ONLINE_CITY_CORPORATION_WORD_GROUP_ID'), "text"=>$this->lang->line('CDC')),
-                //                                //array("value"=>$this->config->item('ONLINE_MUNICIPAL_WORD_GROUP_ID'), "text"=>$this->lang->line('PDC')),
-                //                            );
-                //                            $CI->load_view('dropdown',array('drop_down_options'=>$report_type));
-                //                            ?>
-                <!--                        </select>-->
-                <!--                    </div>-->
-                <!--                </div>-->
+                                <div class="row show-grid ">
+                                    <div class="col-xs-4">
+                                        <label class="control-label pull-right"><?php echo $CI->lang->line('DIGITAL_CENTER'); ?><span style="color:#FF0000">*</span></label>
+                                    </div>
+                                    <div class="col-sm-4 col-xs-8">
+                                        <select name="report_type" id="report_type" class="form-control">
+                                            <?php
+                                            $report_type=array
+                                            (
+                                                array("value"=>$this->config->item('ONLINE_UNION_GROUP_ID'), "text"=>$this->lang->line('UDC')),
+                                                array("value"=>$this->config->item('ONLINE_CITY_CORPORATION_WORD_GROUP_ID'), "text"=>$this->lang->line('CDC')),
+                                                array("value"=>$this->config->item('ONLINE_MUNICIPAL_WORD_GROUP_ID'), "text"=>$this->lang->line('PDC')),
+                                            );
+                                            $CI->load_view('dropdown',array('drop_down_options'=>$report_type));
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
 
-                <div class="row" id="go_location" style="display: none">
+                <!--<div class="row" id="go_location" style="display: none">
 
-                </div>
+                </div>-->
 
                 <!--                <div class="row show-grid ">-->
                 <!--                    <div class="col-xs-4">-->
@@ -103,7 +103,7 @@ $user=User_helper::get_user();
     {
         turn_off_triggers();
         $( ".report_date" ).datepicker({dateFormat : display_date_format});
-        $(document).on("change","#report_type",function()
+        /*$(document).on("change","#report_type",function()
         {
 
             $("#go_location").html('');
@@ -151,7 +151,7 @@ $user=User_helper::get_user();
                 $("#go_location").html('');
 
             }
-        });
+        });*/
 
     });
 </script>

@@ -103,6 +103,8 @@ $config['approval_year']['2015'] = '2015';
 $config['approval_year']['2016'] = '2016';
 $config['approval_year']['2017'] = '2017';
 $config['approval_year']['2018'] = '2018';
+$config['approval_year']['2019'] = '2019';
+$config['approval_year']['2020'] = '2020';
 
 // Month
 $config['month']['01'] = 'জানুয়ারি';
@@ -172,3 +174,9 @@ $config['user_level_max']=13;
 
 // Total service amount limit
 $config['service_amount_limit']=10000;
+
+//Performance report type
+
+$config['performance_report'][1]="আয়";
+$config['performance_report'][2]="ই-সেবারসংখ্যা";
+$config['performance_report'][3]="রিপোর্ট আপ্লোড সংখ্যা";

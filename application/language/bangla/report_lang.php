@@ -212,3 +212,20 @@ $lang['TOTAL_GOVERNMENT_SERVICE']="সরকারি";
 $lang['REPORT_CITYCORPORATION_USER_PROFILE_UPDATE_STATUS']= "সিটি কর্পোরেশন ভিত্তিক উদ্যোক্তাদের প্রোফাইল আপডেট স্ট্যাটাস প্রতিবেদন";
 $lang['REPORT_UNION_USER_PROFILE_UPDATE_STATUS']= "ইউনিয়নভিত্তিক  ভিত্তিক উদ্যোক্তাদের প্রোফাইল আপডেট স্ট্যাটাস প্রতিবেদন";
 $lang['REPORT_MUNICIPAL_USER_PROFILE_UPDATE_STATUS']= "পৌরসভাভিত্তিক  ভিত্তিক উদ্যোক্তাদের প্রোফাইল আপডেট স্ট্যাটাস প্রতিবেদন";
+
+
+//// Upload Report
+
+$lang['TOTAL_ZILLA']='মোট জেলাঃ ';
+$lang['TOTAL_UPAZILLA']='মোট উপজেলাঃ ';
+$lang['TOTAL_MUNICIPAL']='মোট পৌরসভাঃ ';
+$lang['TOTAL_UNION']='মোট ইউনিয়নঃ ';
+$lang['TOTAL_WARD']='মোট ওয়ার্ডঃ ';
+$lang['WARD']='ওয়ার্ড';
+$lang['CENTER'] = 'সেন্টার';
+$lang['NUMBER_OF_UPLOAD'] = 'রিপোর্ট আপলোড সংখ্যা';
+$lang['REMARKS'] = 'মন্তব্য';
+$lang['SATISFIED'] = 'সন্তোষজনক';
+$lang['FAIRLY_SATISFIED'] = 'মোটামুটিসন্তোষজনক';
+$lang['NOT_SATISFIED'] = 'সন্তোষজনকনয়';
+$lang['UNSATISFIED'] = 'অসন্তোষজনক';

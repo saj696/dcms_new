@@ -42,7 +42,15 @@ class Media_corner_print extends Root_Controller
         $data = array();
 
         $data['title']=$this->lang->line("PRINT_CORNER");
-        $data['prints']=$this->Media_corner_print_model->get_media_prints();
+        $prints=$this->Media_corner_print_model->get_media_prints();
+        $arranged_array = array();
+        foreach ($prints as $key => $print) {
+            $arranged_array[$print['print_year']][$key]['file_name'] = $print['file_name'];
+            $arranged_array[$print['print_year']][$key]['media_title'] = $print['media_title'];
+            $arranged_array[$print['print_year']][$key]['external_link'] = $print['external_link'];
+        }
+
+        $data['arranged_array']=$arranged_array;
 
         $ajax['system_content'][]=array("id"=>"#system_wrapper_top_menu","html"=>$this->load_view("top_menu","",true));
         $ajax['system_content'][]=array("id"=>"#system_wrapper","html"=>$this->load_view("media/media_corner/media_print_add_edit",$data,true));
@@ -54,6 +62,33 @@ class Media_corner_print extends Root_Controller
 
         $ajax['system_page_url']=$this->get_encoded_url('media/media_corner_print/index/view/');
         $this->jsonReturn($ajax);
+    }
+
+    public function get_result()
+    {
+        $data['title']=$this->lang->line("PRINT_CORNER");
+        $title=$this->input->post('title');
+        $prints=$this->Media_corner_print_model->get_media_search_result($title);
+        $arranged_array = array();
+        foreach ($prints as $key => $print) {
+            $arranged_array[$print['print_year']][$key]['file_name'] = $print['file_name'];
+            $arranged_array[$print['print_year']][$key]['media_title'] = $print['media_title'];
+            $arranged_array[$print['print_year']][$key]['external_link'] = $print['external_link'];
+        }
+
+        $data['arranged_array']=$arranged_array;
+        $ajax['system_content'][]=array("id"=>"#system_wrapper_top_menu","html"=>$this->load_view("top_menu","",true));
+        $ajax['system_content'][]=array("id"=>"#system_wrapper","html"=>$this->load_view("media/media_corner/media_print_add_edit",$data,true));
+
+        if($this->message)
+        {
+            $ajax['system_message']=$this->message;
+        }
+
+        $ajax['system_page_url']=$this->get_encoded_url('media/media_corner_print/index/view/');
+        $this->jsonReturn($ajax);
+
+
     }
 
 }

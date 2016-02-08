@@ -31,6 +31,7 @@ $user=User_helper::get_user();
                 { name: 'id', type: 'int' },
                 { name: 'edit_link', type: 'string' },
                 { name: 'notice_title', type: 'string' },
+                { name: 'notice_type', type: 'string' },
                 { name: 'upload_status', type: 'string' },
                 { name: 'status_text', type: 'string' }
             ],
@@ -56,9 +57,10 @@ $user=User_helper::get_user();
                 autoheight: true,
 
                 columns: [
-                    { text: '<?php echo $CI->lang->line('NOTICE_TITLE'); ?>', dataField: 'notice_title', width:'800'},
-                    { text: '<?php echo $CI->lang->line('FILE_UPLOAD'); ?>', dataField: 'upload_status', width:'200'},
-                    { text: '<?php echo $CI->lang->line('STATUS'); ?>', dataField: 'status_text',cellsalign: 'right',width:'115'}
+                    { text: '<?php echo $CI->lang->line('NOTICE_TITLE'); ?>', dataField: 'notice_title', width:'50%'},
+                    { text: '<?php echo $CI->lang->line('NOTICE_TYPE'); ?>', dataField: 'notice_type', width:'20%'},
+                    { text: '<?php echo $CI->lang->line('FILE_UPLOAD'); ?>', dataField: 'upload_status', width:'20%'},
+                    { text: '<?php echo $CI->lang->line('STATUS'); ?>', dataField: 'status_text',cellsalign: 'right',width:'7%'}
                 ]
             });
         //for Double Click to edit

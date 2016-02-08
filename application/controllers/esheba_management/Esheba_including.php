@@ -120,6 +120,7 @@ class Esheba_including extends Root_Controller
 
         $user=User_helper::get_user();
         $uisc=User_helper::get_uisc_info();
+        print
         $id = $this->input->post("id");
 
         if($id>0)

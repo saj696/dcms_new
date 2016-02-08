@@ -194,6 +194,7 @@ class Website_helper
         $CI->db->join($CI->config->item('table_users').' core_01_users','core_01_users.id = notice.create_by', 'LEFT');
         $CI->db->join($CI->config->item('table_user_group').' core_02_user_group','core_02_user_group.id = core_01_users.user_group_id', 'LEFT');
         $CI->db->where('notice.notice_type', 3);
+        $CI->db->where('notice.status', 1);
         $CI->db->order_by('notice.id', 'DESC');
         $CI->db->limit(5);
         $results = $CI->db->get()->result_array();
