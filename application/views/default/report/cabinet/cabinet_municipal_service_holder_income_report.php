@@ -47,7 +47,7 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                 <th><?php echo $this->lang->line('FEMALE');?></th>
                 <th><?php echo $this->lang->line('TRIBE');?></th>
                 <th><?php echo $this->lang->line('DISABILITY');?></th>
-                <th><?php echo $this->lang->line('INCOME');?></th>
+                <th><?php echo $this->lang->line('TOTAL_SERVICE_HOLDER');?></th>
             </tr>
             </thead>
             <tbody>
@@ -90,26 +90,26 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                                     foreach($uisc['invoice'] as $invoice)
                                     {
                                         $invoice_date = strtotime($invoice['invoice_date']);
-                                        $total_income = $invoice['total_income'];
+//                                        $total_income = $invoice['total_income'];
                                         $total_men = $invoice['total_men'];
                                         $total_women = $invoice['total_women'];
                                         $total_tribe = $invoice['total_tribe'];
                                         $total_disability = $invoice['total_disability'];
 
-                                        $upazilla_total_invoice_amount += $total_income;
+//                                        $upazilla_total_invoice_amount += $total_income;
                                         $upazilla_total_invoice_men += $total_men;
                                         $upazilla_total_invoice_women += $total_women;
                                         $upazilla_total_invoice_tribe += $total_tribe;
                                         $upazilla_total_invoice_disability += $total_disability;
 
-                                        $grand_total_invoice_amount += $total_income;
+//                                        $grand_total_invoice_amount += $total_income;
                                         $grand_total_invoice_men += $total_men;
                                         $grand_total_invoice_women += $total_women;
                                         $grand_total_invoice_tribe += $total_tribe;
                                         $grand_total_invoice_disability += $total_disability;
 
                                         ?>
-                                        <tr style="background: #cccccc">
+                                        <tr>
                                             <td>
                                                 <?php
                                                 if ($division_name == '')
@@ -211,37 +211,37 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                                                 ?>
                                             </td>
                                             <td><?php echo System_helper::Get_Eng_to_Bng(date('d-m-Y', $invoice_date));?></td>
-                                            <td><?php echo System_helper::Get_Eng_to_Bng($total_men);?></td>
-                                            <td><?php echo System_helper::Get_Eng_to_Bng($total_women);?></td>
-                                            <td><?php echo System_helper::Get_Eng_to_Bng($total_tribe);?></td>
-                                            <td><?php echo System_helper::Get_Eng_to_Bng($total_disability);?></td>
-                                            <td><?php echo System_helper::Get_Eng_to_Bng($total_income);?></td>
+                                            <td style="text-align: right;"><?php echo System_helper::Get_Eng_to_Bng($total_men);?></td>
+                                            <td style="text-align: right;"><?php echo System_helper::Get_Eng_to_Bng($total_women);?></td>
+                                            <td style="text-align: right;"><?php echo System_helper::Get_Eng_to_Bng($total_tribe);?></td>
+                                            <td style="text-align: right;"><?php echo System_helper::Get_Eng_to_Bng($total_disability);?></td>
+                                            <td style="text-align: right;"><?php echo System_helper::Get_Eng_to_Bng($total_men+$total_women+$total_tribe+$total_disability);?></td>
                                         </tr>
                                         <?php
                                     }
                                 }
                             }
                             ?>
-                            <tr>
-                                <th colspan="6" style="text-align: right"><?php echo $this->lang->line('UPAZILLA');?> <?php echo $this->lang->line('TOTAL');?></th>
-                                <th><?php echo System_helper::Get_Eng_to_Bng($upazilla_total_invoice_men);?></th>
-                                <th><?php echo System_helper::Get_Eng_to_Bng($upazilla_total_invoice_women);?></th>
-                                <th><?php echo System_helper::Get_Eng_to_Bng($upazilla_total_invoice_tribe);?></th>
-                                <th><?php echo System_helper::Get_Eng_to_Bng($upazilla_total_invoice_disability);?></th>
-                                <th><?php echo System_helper::Get_Eng_to_Bng($upazilla_total_invoice_amount);?></th>
-                            </tr>
+                            <!--<tr>
+                                <th colspan="6" style="text-align: right"><?php /*echo $this->lang->line('UPAZILLA');*/?> <?php /*echo $this->lang->line('TOTAL');*/?></th>
+                                <th><?php /*echo System_helper::Get_Eng_to_Bng($upazilla_total_invoice_men);*/?></th>
+                                <th><?php /*echo System_helper::Get_Eng_to_Bng($upazilla_total_invoice_women);*/?></th>
+                                <th><?php /*echo System_helper::Get_Eng_to_Bng($upazilla_total_invoice_tribe);*/?></th>
+                                <th><?php /*echo System_helper::Get_Eng_to_Bng($upazilla_total_invoice_disability);*/?></th>
+                                <th><?php /*echo System_helper::Get_Eng_to_Bng($upazilla_total_invoice_amount);*/?></th>
+                            </tr>-->
                         <?php
                         }
                     }
                 }
                 ?>
-                <tr>
+                <tr style="background: #EEEEEE">
                     <th colspan="6" style="text-align: right"><?php echo $this->lang->line('TOTAL');?></th>
-                    <th><?php echo System_helper::Get_Eng_to_Bng($grand_total_invoice_men);?></th>
-                    <th><?php echo System_helper::Get_Eng_to_Bng($grand_total_invoice_women);?></th>
-                    <th><?php echo System_helper::Get_Eng_to_Bng($grand_total_invoice_tribe);?></th>
-                    <th><?php echo System_helper::Get_Eng_to_Bng($grand_total_invoice_disability);?></th>
-                    <th><?php echo System_helper::Get_Eng_to_Bng($grand_total_invoice_amount);?></th>
+                    <th style="text-align: right;"><?php echo System_helper::Get_Eng_to_Bng($grand_total_invoice_men);?></th>
+                    <th style="text-align: right;"><?php echo System_helper::Get_Eng_to_Bng($grand_total_invoice_women);?></th>
+                    <th style="text-align: right;"><?php echo System_helper::Get_Eng_to_Bng($grand_total_invoice_tribe);?></th>
+                    <th style="text-align: right;"><?php echo System_helper::Get_Eng_to_Bng($grand_total_invoice_disability);?></th>
+                    <th style="text-align: right;"><?php echo System_helper::Get_Eng_to_Bng($grand_total_invoice_men+$grand_total_invoice_women+$grand_total_invoice_tribe+$grand_total_invoice_disability);?></th>
                 </tr>
             <?php
             }

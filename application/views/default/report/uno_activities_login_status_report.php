@@ -41,7 +41,7 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                     <!--                    <th>--><?php //echo $this->lang->line('ZILLA_NAME');?><!--</th>-->
                     <!--                    <th>--><?php //echo $this->lang->line('UPAZILLA_NAME');?><!--</th>-->
                     <!--                    <th>--><?php //echo $this->lang->line('UNION_NAME');?><!--</th>-->
-                    <th><?php echo $this->lang->line('NAME');?></th>
+                    <th><?php echo $this->lang->line('UPAZILLA');?></th>
                     <th><?php echo $this->lang->line('TEN_DAYS');?></th>
                     <th><?php echo $this->lang->line('TWENTY_DAYS');?></th>
                     <th><?php echo $this->lang->line('THIRTY_DAYS');?></th>
@@ -92,7 +92,7 @@ $pdf_link="http://".$_SERVER['HTTP_HOST'].str_replace("/list","/pdf",$_SERVER['R
                         }
                         ?>
                         <tr>
-                            <td><?php echo $row['name_bn'];?></td>
+                            <td><?php echo $row['upazilaname'];?></td>
                             <td><?php echo $ten_days_status;?></td>
                             <td><?php echo $twenty_days_status;?></td>
                             <td><?php echo $thirty_days_status;?></td>

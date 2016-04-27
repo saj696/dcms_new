@@ -16,6 +16,7 @@ class Profile_update_status_report extends Root_Controller
         $this->permissions=Menu_helper::get_permission('report/profile_update_status/Profile_update_status_report');
        // $this->controller_url='report/profile_update_status/Profile_update_status_report';
         //$this->load->model("report/Profile_update_status_report_model");
+        $this->lang->load('report_lang');
     }
 
     public function index()
@@ -27,7 +28,7 @@ class Profile_update_status_report extends Root_Controller
 
         $ajax['system_content'][] = array("id" => "#system_wrapper_top_menu", "html" => $this->load_view("top_menu", "", true));
         $ajax['system_content'][] = array("id" => "#system_wrapper", "html" => $this->load_view("report/profile_update_status/profile_update_status_report", $data, true));
-        $ajax['system_page_url'] = $this->get_encoded_url('report/profile_update_status/Profile_update_status_report');
+        $ajax['system_page_url'] = $this->get_encoded_url('report/profile_update_status/profile_update_status_report');
         $this->jsonReturn($ajax);
     }
 

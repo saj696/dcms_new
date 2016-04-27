@@ -14,7 +14,7 @@ $user=User_helper::get_user();
     <div class="col-lg-8">
 
         <div class="clearfix"></div>
-        <form class="report_form" id="system_save_form" action="<?php echo $CI->get_encoded_url('report/upload/upload_report_view/index/list'); ?>" method="get">
+        <form class="report_form" id="system_save_form" action="<?php echo $CI->get_encoded_url('report/services/services_report_view/index/list'); ?>" method="get">
             <div class="row widget">
                 <div class="widget-header">
                     <div class="title">
@@ -46,39 +46,37 @@ $user=User_helper::get_user();
 
                 </div>
 
-                <!--<div class="row show-grid ">
+                <div class="row show-grid ">
                     <div class="col-xs-4">
-                        <label class="control-label pull-right"><?php /*echo $CI->lang->line('STATUS'); */?><span style="color:#FF0000">*</span></label>
+                        <label class="control-label pull-right"><?php echo $CI->lang->line('SERVICE'); ?><span style="color:#FF0000">*</span></label>
                     </div>
                     <div class="col-sm-4 col-xs-8">
-                        <select name="status" id="status" class="form-control">
+                        <select name="service_id" id="service_id" class="form-control">
+                            <option selected="selected"><?php echo $this->lang->line('SELECT');?></option>
                             <?php
-/*                            $report_type=array
-                            (
-                                array("value"=>"100", "text"=>$this->lang->line('ALL_DATA_100')),
-                                array("value"=>"60", "text"=>$this->lang->line('REGULAR_41_100')),
-                                array("value"=>"40", "text"=>$this->lang->line('IRREGULAR_1_40')),
-                                array("value"=>"0", "text"=>$this->lang->line('CLOSED_0_0')),
-                            );
-                            $CI->load_view('dropdown',array('drop_down_options'=>$report_type));
-                            */?>
+                            foreach($services as $service)
+                            {
+                                ?>
+                                <option value="<?php echo $service['service_id'];?>"><?php echo $service['service_name'];?></option>
+                            <?php
+                            }
+                            ?>
                         </select>
                     </div>
-                </div>-->
-                <input type="hidden" name="status" value="100">
+                </div>
                 <div class="row show-grid ">
                     <div class="col-xs-4">
                         <label class="control-label pull-right"><?php echo $CI->lang->line('MONTH'); ?><span style="color:#FF0000">*</span></label>
                     </div>
                     <div class="col-sm-4 col-xs-8">
                         <select name="month" id="month" class="form-control">
-                            <option selected="" value=""><?= $CI->lang->line('SELECT') ?></option>
+                            <option selected="selected"><?php echo $this->lang->line('SELECT');?></option>
                             <?php
-                            foreach($CI->config->item('month') as $key=>$item)
+                            foreach($this->config->item('month') as $key=>$value)
                             {
                                 ?>
-                                <option value="<?= $key ?>"><?= $item ?></option>
-                            <?php
+                                <option value="<?php echo $key;?>"><?php echo $value;?></option>
+                                <?php
                             }
                             ?>
                         </select>
@@ -90,12 +88,14 @@ $user=User_helper::get_user();
                     </div>
                     <div class="col-sm-4 col-xs-8">
                         <select name="year" id="year" class="form-control">
-                            <option selected="selected"><?= $this->lang->line('SELECT') ?></option>
+                            <option selected="selected"><?php echo $this->lang->line('SELECT');?></option>
                             <?php
-                            foreach($CI->config->item('approval_year') as $key=>$value)
-                            { ?>
-                                <option value="<?= $key ?>"><?= System_helper::Get_Eng_to_Bng($value) ?></option>
-                           <?php }
+                            foreach($this->config->item('approval_year') as $key=>$value)
+                            {
+                                ?>
+                                <option value="<?php echo $key;?>"><?php echo $value;?></option>
+                                <?php
+                            }
                             ?>
                         </select>
                     </div>
@@ -128,15 +128,15 @@ $user=User_helper::get_user();
             var report_go_url='';
             if(report_type_id=="<?php echo $this->config->item('ONLINE_UNION_GROUP_ID');?>")
             {
-                report_go_url="<?php echo $CI->get_encoded_url('report/upload/Upload_report_union_list/index'); ?>";
+                report_go_url="<?php echo $CI->get_encoded_url('report/common/union_list/index'); ?>";
             }
             else if(report_type_id=="<?php echo $this->config->item('ONLINE_CITY_CORPORATION_WORD_GROUP_ID');?>")
             {
-                report_go_url="<?php echo $CI->get_encoded_url('report/upload/Upload_report_city_corporation_list/index'); ?>";
+                report_go_url="<?php echo $CI->get_encoded_url('report/common/city_corporation_list/index'); ?>";
             }
             else if(report_type_id=="<?php echo $this->config->item('ONLINE_MUNICIPAL_WORD_GROUP_ID');?>")
             {
-                report_go_url="<?php echo $CI->get_encoded_url('report/upload/Upload_report_municipal_list/index'); ?>";
+                report_go_url="<?php echo $CI->get_encoded_url('report/common/municipal_list/index'); ?>";
             }
             else
             {
@@ -172,3 +172,9 @@ $user=User_helper::get_user();
 
     });
 </script>
+
+<style>
+    #upazila_option{display: none !important}
+    #city_corporation_option{display: none !important}
+    #municipal_option{display: none !important}
+</style>

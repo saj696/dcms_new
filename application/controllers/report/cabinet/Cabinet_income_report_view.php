@@ -35,9 +35,11 @@ class Cabinet_income_report_view extends CI_Controller
 
 
             $data['report_type'] = $report_type = $this->input->get('report_type');
-            $data['from_date'] = $from_date = $this->input->get('from_date');
-            $data['to_date'] = $to_date = $this->input->get('to_date');
+            $month = $this->input->get('month');
+            $year = $this->input->get('year');
 
+            $data['from_date'] = $from_date = $year.'-'.$month.'-01';
+            $data['to_date'] = $to_date = date('Y-m-t',strtotime($from_date));
             if($report_type==1)
             {
                 $data['title'] = $this->lang->line("REPORT_CABINET_UNION_INCOME_TITLE");
